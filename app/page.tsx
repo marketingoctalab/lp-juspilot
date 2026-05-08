@@ -208,13 +208,13 @@ export default function JuspilotPage() {
                 { src: "/logo-cnj-portal-20-09-1.svg", alt: "CNJ" },
                 { src: "/oab-nc.png", alt: "OAB" },
                 { src: "/receita-federal-logo.png", alt: "Receita Federal" },
-                { src: "/stf.png", alt: "STF" },
+                { src: "/Logotipo_do_Supremo_Tribunal_Federal_P&B.svg", alt: "STF" },
                 { src: "/tse.svg", alt: "TSE" },
                 { src: "/logo_stj.svg", alt: "STJ" },
                 { src: "/logo-cnj-portal-20-09-1.svg", alt: "CNJ" },
                 { src: "/oab-nc.png", alt: "OAB" },
                 { src: "/receita-federal-logo.png", alt: "Receita Federal" },
-                { src: "/stf.png", alt: "STF" },
+                { src: "/Logotipo_do_Supremo_Tribunal_Federal_P&B.svg", alt: "STF" },
                 { src: "/tse.svg", alt: "TSE" },
               ].map((logo, i) => (
                 <div key={i} className="px-6 md:px-10 flex items-center justify-center flex-shrink-0">
