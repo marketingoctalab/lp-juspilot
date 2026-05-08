@@ -72,8 +72,6 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
   }, [])
 
   useEffect(() => {
-    setIsLoaded(true)
-
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
