@@ -16,8 +16,15 @@ export const en: Translations = {
   hero: {
     badge: "Legal intelligence for high-volume operations",
     h1: "The legal infrastructure that Brazil's largest operations choose.",
+    animatedTexts: [
+      "with precision and control.",
+      "with AI and traceability.",
+      "without compromise.",
+      "at scale.",
+    ],
     sub: "Legal departments at Fortune 500 companies and elite law firms use AI to operate with precision, speed, and full control — without compromising security.",
     cta: "Schedule a call with a specialist",
+    socialProof: "Over 500 legal teams already run on Juspilot",
   },
   logos: {
     label: "Connected to the courts and agencies you use",

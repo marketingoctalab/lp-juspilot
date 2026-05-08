@@ -14,8 +14,15 @@ export const pt = {
   hero: {
     badge: "Inteligência jurídica para operações de alto volume",
     h1: "A infraestrutura jurídica que as maiores operações do Brasil escolhem.",
+    animatedTexts: [
+      "com precisão e controle.",
+      "com IA e rastreabilidade.",
+      "sem concessões.",
+      "em escala.",
+    ],
     sub: "Departamentos jurídicos de empresas como a Fortune 500 e escritórios de elite usam IA para operar com precisão, velocidade e controle total. Sem abrir mão da segurança.",
     cta: "Agendar conversa com especialista",
+    socialProof: "Mais de 500 jurídicos já operam com Juspilot",
   },
   logos: {
     label: "Conectado aos tribunais e órgãos que você usa",

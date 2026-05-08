@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, use } from "react"
 import { Button } from "@/components/ui/button"
 import { Scale, FileText, MessageSquare, Search, Workflow, ChevronDown } from "lucide-react"
-import { HeroPreview } from "@/components/hero-preview"
+import { HeroSection } from "@/components/ui/hero-section"
 import { Header } from "@/components/header"
 import { ContactModal } from "@/components/contact-modal"
 import { LanguageSwitcher } from "@/components/language-switcher"
@@ -61,47 +61,14 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
 
   const t = getTranslations(locale as Locale)
 
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
-  const [dashboardScrollOffset, setDashboardScrollOffset] = useState(0)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
-  const dashboardRef = useRef<HTMLDivElement>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver>(null)
 
   useEffect(() => {
     const handler = () => setModalOpen(true)
     window.addEventListener("juspilot:open-contact", handler)
     return () => window.removeEventListener("juspilot:open-contact", handler)
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-
-      if (dashboardRef.current) {
-        const dashboardRect = dashboardRef.current.getBoundingClientRect()
-        const viewportHeight = window.innerHeight
-        const rotationStart = viewportHeight * 0.8
-        const rotationEnd = viewportHeight * 0.2
-
-        if (dashboardRect.top >= rotationStart) {
-          setDashboardScrollOffset(0)
-        } else if (dashboardRect.top <= rotationEnd) {
-          setDashboardScrollOffset(15)
-        } else {
-          const scrollRange = rotationStart - rotationEnd
-          const currentProgress = rotationStart - dashboardRect.top
-          const rotationProgress = currentProgress / scrollRange
-          setDashboardScrollOffset(rotationProgress * 15)
-        }
-      }
-    }
-
-    handleScroll()
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   useEffect(() => {
@@ -131,72 +98,23 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
 
       <main id="conteudo-principal">
         {/* Hero */}
-        <section
+        <HeroSection
           aria-label="Hero"
-          ref={heroRef}
-          className={`relative min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isLoaded ? "scale-100 opacity-100" : "scale-[1.03] opacity-0"}`}
-          style={{
-            backgroundImage: `url('/mario-gogh-VBLHICVh-lI-unsplash.jpg')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundAttachment: "fixed",
-          }}
-        >
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              transform: `translateY(${scrollY * 0.5}px)`,
-              backgroundImage: `url('/mario-gogh-VBLHICVh-lI-unsplash.jpg')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0F] via-[#0B0C0F]/70 to-transparent pointer-events-none" />
-
-          <div
-            className="max-w-[1120px] w-full mx-auto relative z-10"
-            style={{ transform: `translateY(${scrollY * 0.2}px)` }}
-          >
-            <div className="text-center mb-8 md:mb-12">
-              <div className="inline-flex items-center gap-2 glass-pill px-4 py-2 rounded-full mb-8 text-xs md:text-sm text-[#A7ABB3] stagger-reveal border border-white/10">
-                <span className="w-1.5 h-1.5 rounded-full bg-pink-400" />
-                {t.hero.badge}
-              </div>
-              <h1 className="font-serif font-light text-[36px] leading-[1.1] sm:text-[52px] md:text-[72px] lg:text-[88px] md:leading-[1.05] mb-6 text-balance stagger-reveal">
-                {t.hero.h1}
-              </h1>
-              <p
-                className="text-[#A7ABB3] text-base md:text-lg max-w-[560px] mx-auto mb-10 leading-relaxed stagger-reveal text-white"
-                style={{ animationDelay: "180ms" }}
-              >
-                {t.hero.sub}
-              </p>
-              <div className="stagger-reveal flex flex-col items-center gap-4" style={{ animationDelay: "270ms" }}>
-                <Button
-                  onClick={() => setModalOpen(true)}
-                  className="glass-button px-10 py-6 text-base rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-white"
-                >
-                  {t.hero.cta}
-                </Button>
-              </div>
-            </div>
-
-            <div className="mt-12 md:mt-20 stagger-reveal" style={{ animationDelay: "360ms" }} ref={dashboardRef}>
-              <div style={{ perspective: "1200px" }}>
-                <div
-                  className="relative rounded-[24px] overflow-hidden"
-                  style={{
-                    transform: `rotateX(${dashboardScrollOffset}deg)`,
-                    transformStyle: "preserve-3d",
-                    transition: "transform 0.05s linear",
-                  }}
-                >
-                  <HeroPreview />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          badge={t.hero.badge}
+          title={t.hero.h1}
+          animatedTexts={t.hero.animatedTexts}
+          subtitle={t.hero.sub}
+          ctaButtonText={t.hero.cta}
+          socialProofText={t.hero.socialProof}
+          avatars={[
+            { src: "", alt: "Usuário 1", fallback: "JS" },
+            { src: "", alt: "Usuário 2", fallback: "MC" },
+            { src: "", alt: "Usuário 3", fallback: "AL" },
+            { src: "", alt: "Usuário 4", fallback: "RB" },
+            { src: "", alt: "Usuário 5", fallback: "TP" },
+          ]}
+          onCtaClick={() => setModalOpen(true)}
+        />
 
         {/* Logo marquee */}
         <section className="relative py-12 border-y border-white/5 bg-[#0B0C0F] overflow-hidden md:py-8 md:pt-8 md:pb-4">
