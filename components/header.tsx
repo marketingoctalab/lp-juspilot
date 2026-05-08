@@ -6,20 +6,36 @@ import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/logo';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import type { Locale, Translations } from '@/lib/i18n';
 
-const navigation = [
-  { name: 'Plataforma', href: 'https://juspilot.ai/plataforma' },
-  { name: 'Produtos',   href: 'https://juspilot.ai/produtos' },
-  { name: 'Planos',     href: 'https://juspilot.ai/pricing' },
-  { name: 'Blog',       href: 'https://juspilot.ai/blog' },
+interface HeaderProps {
+  locale?: Locale
+  t?: Translations['nav']
+}
+
+const DEFAULT_NAV = [
+  { key: 'platform' as const, href: 'https://juspilot.ai/plataforma' },
+  { key: 'products' as const, href: 'https://juspilot.ai/produtos' },
+  { key: 'pricing' as const, href: 'https://juspilot.ai/pricing' },
+  { key: 'blog' as const, href: 'https://juspilot.ai/blog' },
 ];
 
-export function Header() {
+export function Header({ locale = 'pt', t }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  const navLabels = t ?? {
+    platform: 'Plataforma',
+    products: 'Produtos',
+    pricing: 'Planos',
+    blog: 'Blog',
+    cta: 'Agendar conversa',
+    switchLang: locale === 'pt' ? 'English' : 'Português',
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 24);
@@ -29,6 +45,11 @@ export function Header() {
   }, []);
 
   const transparent = !isScrolled && !mobileMenuOpen;
+
+  const navigation = DEFAULT_NAV.map((item) => ({
+    name: navLabels[item.key],
+    href: item.href,
+  }));
 
   return (
     <header
@@ -41,7 +62,7 @@ export function Header() {
     >
       <nav className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-6 md:px-10">
         <div className="flex items-center gap-9">
-          <Link href="/" aria-label="Juspilot" className="flex items-center shrink-0">
+          <Link href={`/${locale}`} aria-label="Juspilot" className="flex items-center shrink-0">
             <Logo size="sm" variant="light" />
           </Link>
 
@@ -65,12 +86,17 @@ export function Header() {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
+          <LanguageSwitcher
+            currentLocale={locale}
+            label={navLabels.switchLang ?? (locale === 'pt' ? 'English' : 'Português')}
+            className="text-sm text-white/60 hover:text-white transition-colors cursor-pointer"
+          />
           <Button
             size="sm"
             className="bg-[#D97757] text-white hover:bg-[#c66747] border-0"
             onClick={() => window.dispatchEvent(new CustomEvent('juspilot:open-contact'))}
           >
-            Agendar conversa
+            {navLabels.cta}
           </Button>
         </div>
 
@@ -103,14 +129,19 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-3 mt-3 border-t border-black/[0.06] flex flex-col gap-2">
+              <LanguageSwitcher
+                currentLocale={locale}
+                label={navLabels.switchLang ?? (locale === 'pt' ? 'English' : 'Português')}
+                className="w-full text-center px-4 py-2 rounded-lg border border-black/10 text-sm text-ink/70 hover:bg-black/[0.04] transition-colors"
+              />
               <Button
                 className="w-full bg-[#D97757] text-white hover:bg-[#c66747] border-0"
                 onClick={() => {
-                  setMobileMenuOpen(false)
-                  window.dispatchEvent(new CustomEvent('juspilot:open-contact'))
+                  setMobileMenuOpen(false);
+                  window.dispatchEvent(new CustomEvent('juspilot:open-contact'));
                 }}
               >
-                Agendar conversa
+                {navLabels.cta}
               </Button>
             </div>
           </motion.div>

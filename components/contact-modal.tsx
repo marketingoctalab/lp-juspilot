@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import type { Locale, Translations } from '@/lib/i18n'
 
 const CARGO_LIST = [
   'General Counsel (GC)',
@@ -33,11 +34,41 @@ const UF_LIST = [
 interface ContactModalProps {
   open: boolean
   onClose: () => void
+  locale?: Locale
+  t?: Translations['modal']
 }
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
 
-export function ContactModal({ open, onClose }: ContactModalProps) {
+const DEFAULT_T: Translations['modal'] = {
+  title: 'Agendar conversa com especialista',
+  subtitle: 'Nossa equipe entra em contato em até 1 dia útil.',
+  close: 'Fechar',
+  success: {
+    title: 'Recebemos sua solicitação.',
+    body: 'Um especialista Juspilot entrará em contato em até 1 dia útil para agendar a conversa.',
+    close: 'Fechar',
+  },
+  fields: {
+    name: 'Nome completo',
+    email: 'E-mail corporativo',
+    phone: 'Telefone',
+    role: 'Cargo',
+    company: 'Empresa',
+    state: 'Estado (UF)',
+    rolePlaceholder: 'Selecione seu cargo',
+    statePlaceholder: 'Selecione',
+    namePlaceholder: 'Ana Souza',
+    emailPlaceholder: 'ana@empresa.com.br',
+    phonePlaceholder: '(11) 99999-9999',
+    companyPlaceholder: 'Nome da empresa',
+  },
+  submit: 'Solicitar conversa com especialista',
+  submitting: 'Enviando...',
+  lgpd: 'Seus dados são tratados com confidencialidade, em conformidade com a LGPD.',
+}
+
+export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: ContactModalProps) {
   const [formState, setFormState] = useState<FormState>('idle')
   const [form, setForm] = useState({
     nome: '',
@@ -68,12 +99,12 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
 
   function validate() {
     const e: Partial<typeof form> = {}
-    if (!form.nome.trim()) e.nome = 'Obrigatório'
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'E-mail inválido'
-    if (!form.telefone.trim()) e.telefone = 'Obrigatório'
-    if (!form.cargo.trim()) e.cargo = 'Obrigatório'
-    if (!form.empresa.trim()) e.empresa = 'Obrigatório'
-    if (!form.uf) e.uf = 'Obrigatório'
+    if (!form.nome.trim()) e.nome = locale === 'en' ? 'Required' : 'Obrigatório'
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = locale === 'en' ? 'Invalid email' : 'E-mail inválido'
+    if (!form.telefone.trim()) e.telefone = locale === 'en' ? 'Required' : 'Obrigatório'
+    if (!form.cargo.trim()) e.cargo = locale === 'en' ? 'Required' : 'Obrigatório'
+    if (!form.empresa.trim()) e.empresa = locale === 'en' ? 'Required' : 'Obrigatório'
+    if (!form.uf) e.uf = locale === 'en' ? 'Required' : 'Obrigatório'
     return e
   }
 
@@ -106,7 +137,6 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
       return
     }
     setFormState('submitting')
-    // Aqui você conecta ao seu backend / CRM
     await new Promise(r => setTimeout(r, 1200))
     setFormState('success')
   }
@@ -129,34 +159,25 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-        onClick={handleClose}
-      />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose} />
 
-      {/* Modal */}
       <div className="relative w-full max-w-lg bg-[#0F1014] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-        {/* Header */}
         <div className="flex items-start justify-between p-6 pb-4 border-b border-white/5">
           <div>
             <h2 id="modal-title" className="font-serif text-xl md:text-2xl font-medium text-white">
-              Agendar conversa com especialista
+              {t.title}
             </h2>
-            <p className="text-xs text-[#A7ABB3] mt-1">
-              Nossa equipe entra em contato em até 1 dia útil.
-            </p>
+            <p className="text-xs text-[#A7ABB3] mt-1">{t.subtitle}</p>
           </div>
           <button
             onClick={handleClose}
             className="text-[#A7ABB3] hover:text-white transition-colors ml-4 mt-0.5 shrink-0"
-            aria-label="Fechar"
+            aria-label={t.close}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Body */}
         <div className="p-6">
           {formState === 'success' ? (
             <div className="py-8 text-center">
@@ -165,37 +186,35 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="font-serif text-lg text-white mb-2">Recebemos sua solicitação.</h3>
-              <p className="text-sm text-[#A7ABB3] max-w-xs mx-auto">
-                Um especialista Juspilot entrará em contato em até 1 dia útil para agendar a conversa.
-              </p>
+              <h3 className="font-serif text-lg text-white mb-2">{t.success.title}</h3>
+              <p className="text-sm text-[#A7ABB3] max-w-xs mx-auto">{t.success.body}</p>
               <button
                 onClick={handleClose}
                 className="mt-6 text-xs text-[#A7ABB3] underline underline-offset-4 hover:text-white transition-colors"
               >
-                Fechar
+                {t.success.close}
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Field label="Nome completo" error={errors.nome}>
+                <Field label={t.fields.name} error={errors.nome}>
                   <input
                     name="nome"
                     value={form.nome}
                     onChange={handleChange}
-                    placeholder="Ana Souza"
+                    placeholder={t.fields.namePlaceholder}
                     className={inputClass(!!errors.nome)}
                     autoComplete="name"
                   />
                 </Field>
-                <Field label="E-mail corporativo" error={errors.email}>
+                <Field label={t.fields.email} error={errors.email}>
                   <input
                     name="email"
                     type="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="ana@empresa.com.br"
+                    placeholder={t.fields.emailPlaceholder}
                     className={inputClass(!!errors.email)}
                     autoComplete="email"
                   />
@@ -203,25 +222,25 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Field label="Telefone" error={errors.telefone}>
+                <Field label={t.fields.phone} error={errors.telefone}>
                   <input
                     name="telefone"
                     value={form.telefone}
                     onChange={handlePhone}
-                    placeholder="(11) 99999-9999"
+                    placeholder={t.fields.phonePlaceholder}
                     className={inputClass(!!errors.telefone)}
                     autoComplete="tel"
                     inputMode="tel"
                   />
                 </Field>
-                <Field label="Cargo" error={errors.cargo}>
+                <Field label={t.fields.role} error={errors.cargo}>
                   <select
                     name="cargo"
                     value={form.cargo}
                     onChange={handleChange}
                     className={cn(inputClass(!!errors.cargo), 'appearance-none cursor-pointer')}
                   >
-                    <option value="" disabled>Selecione seu cargo</option>
+                    <option value="" disabled>{t.fields.rolePlaceholder}</option>
                     {CARGO_LIST.map(c => (
                       <option key={c} value={c}>{c}</option>
                     ))}
@@ -230,24 +249,24 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Field label="Empresa" error={errors.empresa}>
+                <Field label={t.fields.company} error={errors.empresa}>
                   <input
                     name="empresa"
                     value={form.empresa}
                     onChange={handleChange}
-                    placeholder="Nome da empresa"
+                    placeholder={t.fields.companyPlaceholder}
                     className={inputClass(!!errors.empresa)}
                     autoComplete="organization"
                   />
                 </Field>
-                <Field label="Estado (UF)" error={errors.uf}>
+                <Field label={t.fields.state} error={errors.uf}>
                   <select
                     name="uf"
                     value={form.uf}
                     onChange={handleChange}
                     className={cn(inputClass(!!errors.uf), 'appearance-none cursor-pointer')}
                   >
-                    <option value="" disabled>Selecione</option>
+                    <option value="" disabled>{t.fields.statePlaceholder}</option>
                     {UF_LIST.map(uf => (
                       <option key={uf} value={uf}>{uf}</option>
                     ))}
@@ -260,12 +279,10 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                 disabled={formState === 'submitting'}
                 className="w-full mt-2 px-6 py-3 rounded-xl text-sm font-medium text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {formState === 'submitting' ? 'Enviando...' : 'Solicitar conversa com especialista →'}
+                {formState === 'submitting' ? t.submitting : `${t.submit} →`}
               </button>
 
-              <p className="text-[10px] text-[#A7ABB3] text-center">
-                Seus dados são tratados com confidencialidade, em conformidade com a LGPD.
-              </p>
+              <p className="text-[10px] text-[#A7ABB3] text-center">{t.lgpd}</p>
             </form>
           )}
         </div>
