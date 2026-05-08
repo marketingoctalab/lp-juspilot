@@ -65,9 +65,6 @@ export function Header() {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
-          <Link href="https://app.juspilot.ai/login" className="notion-nav text-white/65 hover:text-white transition-colors">
-            Entrar
-          </Link>
           <Button
             size="sm"
             className="bg-[#D97757] text-white hover:bg-[#c66747] border-0"
@@ -114,9 +111,6 @@ export function Header() {
                 }}
               >
                 Agendar conversa
-              </Button>
-              <Button variant="outline" className="w-full" asChild>
-                <Link href="https://app.juspilot.ai/login">Entrar</Link>
               </Button>
             </div>
           </motion.div>
