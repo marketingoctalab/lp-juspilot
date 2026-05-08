@@ -127,7 +127,9 @@ export default function JuspilotPage() {
       <ContactModal open={modalOpen} onClose={() => setModalOpen(false)} />
       <Header />
 
+      <main id="conteudo-principal">
       <section
+        aria-label="Hero"
         ref={heroRef}
         className={`relative min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isLoaded ? "scale-100 opacity-100" : "scale-[1.03] opacity-0"}`}
         style={{
@@ -230,7 +232,7 @@ export default function JuspilotPage() {
         </div>
       </section>
 
-      <section id="metrics" className="relative py-20 md:py-32 px-4 animate-on-scroll md:pt-24 md:pb-20">
+      <section id="resultados" aria-label="Resultados e métricas" className="relative py-20 md:py-32 px-4 animate-on-scroll md:pt-24 md:pb-20">
         <div className="max-w-[1120px] w-full mx-auto">
           <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 md:mb-8 text-center text-balance">
             Operações jurídicas que{" "}
@@ -280,7 +282,7 @@ export default function JuspilotPage() {
         </div>
       </section>
 
-      <section id="diferenciais" className="relative py-20 md:py-32 animate-on-scroll bg-[#0B0C0F]">
+      <section id="diferenciais" aria-label="Por que Juspilot" className="relative py-20 md:py-32 animate-on-scroll bg-[#0B0C0F]">
         <div className="text-center mb-12 md:mb-16 px-4">
           <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#A7ABB3] mb-6 flex items-center justify-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
@@ -324,7 +326,7 @@ export default function JuspilotPage() {
         </div>
       </section>
 
-      <section id="plataforma" className="relative py-20 md:py-32 px-4 animate-on-scroll">
+      <section id="plataforma" aria-label="A plataforma Juspilot" className="relative py-20 md:py-32 px-4 animate-on-scroll">
         <div className="max-w-[1120px] w-full mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start mb-16">
             <div>
@@ -396,7 +398,7 @@ export default function JuspilotPage() {
         </div>
       </section>
 
-      <section id="faq" className="relative py-20 md:py-32 px-4 animate-on-scroll">
+      <section id="faq" aria-label="Perguntas frequentes" className="relative py-20 md:py-32 px-4 animate-on-scroll">
         <div className="max-w-[800px] w-full mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#A7ABB3] mb-6 flex items-center justify-center gap-2">
@@ -475,6 +477,7 @@ export default function JuspilotPage() {
 
       <section
         id="cta"
+        aria-label="Agendar conversa"
         className="relative py-24 md:py-40 px-4 animate-on-scroll overflow-hidden pt-0"
         style={{
           backgroundImage: `url('/praca-3-poderes-14.webp')`,
@@ -519,6 +522,7 @@ export default function JuspilotPage() {
           </div>
         </div>
       </section>
+      </main>
 
       <footer
         className="relative bg-[#1c1917]"
