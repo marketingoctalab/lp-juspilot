@@ -478,7 +478,7 @@ export default function JuspilotPage() {
         id="cta"
         className="relative py-24 md:py-40 px-4 animate-on-scroll overflow-hidden pt-0"
         style={{
-          backgroundImage: `url('/hero-landscape.png')`,
+          backgroundImage: `url('/praca-3-poderes-14.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
