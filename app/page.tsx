@@ -167,7 +167,7 @@ export default function JuspilotPage() {
               className="text-[#A7ABB3] text-base md:text-lg max-w-[560px] mx-auto mb-10 leading-relaxed stagger-reveal text-white"
               style={{ animationDelay: "180ms" }}
             >
-              Departamentos jurídicos de empresas Fortune 500 e escritórios de elite usam Juspilot para operar com precisão, velocidade e controle total. Sem abrir mão da segurança.
+              Departamentos jurídicos de empresas como a Fortune 500 e escritórios de elite usam IA para operar com precisão, velocidade e controle total. Sem abrir mão da segurança.
             </p>
             <div className="stagger-reveal flex flex-col items-center gap-4" style={{ animationDelay: "270ms" }}>
               <Button
@@ -176,17 +176,6 @@ export default function JuspilotPage() {
               >
                 Agendar conversa com especialista
               </Button>
-              <div className="flex flex-wrap items-center justify-center gap-3 mt-1">
-                {["Implementação dedicada", "SLA enterprise", "Acesso por qualificação"].map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/15 bg-white/[0.06] text-[#D4D6DA] backdrop-blur-sm"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-pink-400/80 flex-shrink-0" />
-                    {item}
-                  </span>
-                ))}
-              </div>
             </div>
           </div>
 
@@ -519,17 +508,6 @@ export default function JuspilotPage() {
               Agendar conversa com especialista
             </Button>
 
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {["Implementação dedicada", "SLA enterprise", "Acesso por qualificação"].map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/15 bg-white/[0.06] text-[#D4D6DA] backdrop-blur-sm"
-                >
-                  <span className="w-1 h-1 rounded-full bg-pink-400/80 flex-shrink-0" />
-                  {item}
-                </span>
-              ))}
-            </div>
 
             <button
               onClick={() => setModalOpen(true)}

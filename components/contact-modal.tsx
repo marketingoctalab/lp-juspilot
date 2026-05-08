@@ -4,6 +4,26 @@ import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+const CARGO_LIST = [
+  'General Counsel (GC)',
+  'Diretor(a) Jurídico(a)',
+  'Gerente Jurídico(a)',
+  'Advogado(a) Sênior',
+  'Advogado(a) Pleno(a)',
+  'Advogado(a) Júnior',
+  'Coordenador(a) Jurídico(a)',
+  'Analista Jurídico(a)',
+  'Paralegal',
+  'Sócio(a) de Escritório',
+  'Of Counsel',
+  'Compliance Officer',
+  'DPO (Data Protection Officer)',
+  'CEO / Fundador(a)',
+  'COO / Diretor(a) de Operações',
+  'CFO / Diretor(a) Financeiro(a)',
+  'Outro',
+]
+
 const UF_LIST = [
   'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA',
   'MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN',
@@ -195,13 +215,17 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                   />
                 </Field>
                 <Field label="Cargo" error={errors.cargo}>
-                  <input
+                  <select
                     name="cargo"
                     value={form.cargo}
                     onChange={handleChange}
-                    placeholder="General Counsel"
-                    className={inputClass(!!errors.cargo)}
-                  />
+                    className={cn(inputClass(!!errors.cargo), 'appearance-none cursor-pointer')}
+                  >
+                    <option value="" disabled>Selecione seu cargo</option>
+                    {CARGO_LIST.map(c => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
                 </Field>
               </div>
 
