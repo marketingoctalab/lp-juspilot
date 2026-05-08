@@ -158,7 +158,7 @@ export default function JuspilotPage() {
           <div className="text-center mb-8 md:mb-12">
             <div className="inline-flex items-center gap-2 glass-pill px-4 py-2 rounded-full mb-8 text-xs md:text-sm text-[#A7ABB3] stagger-reveal border border-white/10">
               <span className="w-1.5 h-1.5 rounded-full bg-pink-400" />
-              Inteligência jurídica para operações de escala
+              Inteligência jurídica para operações de alto volume
             </div>
             <h1 className="font-serif font-light text-[36px] leading-[1.1] sm:text-[52px] md:text-[72px] lg:text-[88px] md:leading-[1.05] mb-6 text-balance stagger-reveal">
               A infraestrutura jurídica que as maiores operações do Brasil escolhem.
@@ -167,16 +167,26 @@ export default function JuspilotPage() {
               className="text-[#A7ABB3] text-base md:text-lg max-w-[560px] mx-auto mb-10 leading-relaxed stagger-reveal text-white"
               style={{ animationDelay: "180ms" }}
             >
-              Departamentos jurídicos de empresas Fortune 500 e escritórios de elite usam Juspilot para operar com precisão, velocidade e controle total — sem abrir mão da segurança.
+              Departamentos jurídicos de empresas Fortune 500 e escritórios de elite usam Juspilot para operar com precisão, velocidade e controle total. Sem abrir mão da segurança.
             </p>
             <div className="stagger-reveal flex flex-col items-center gap-4" style={{ animationDelay: "270ms" }}>
               <Button
                 onClick={() => setModalOpen(true)}
                 className="glass-button px-10 py-6 text-base rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-white"
               >
-                Agendar conversa com especialista →
+                Agendar conversa com especialista
               </Button>
-              <p className="text-xs text-[#A7ABB3]">Acesso por qualificação &nbsp;·&nbsp; Implementação dedicada &nbsp;·&nbsp; SLA enterprise</p>
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-1">
+                {["Implementação dedicada", "SLA enterprise", "Acesso por qualificação"].map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/15 bg-white/[0.06] text-[#D4D6DA] backdrop-blur-sm"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-pink-400/80 flex-shrink-0" />
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -249,7 +259,7 @@ export default function JuspilotPage() {
           </h2>
 
           <p className="text-[#A7ABB3] text-sm md:text-base mb-12 md:mb-16 text-center max-w-[600px] mx-auto leading-relaxed">
-            Números de departamentos jurídicos que escolheram operar sem concessões.
+            Resultados de departamentos jurídicos que escolheram operar sem concessões.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-[800px] mx-auto">
@@ -291,7 +301,7 @@ export default function JuspilotPage() {
             Construída para quem não aceita<br />soluções genéricas.
           </h2>
           <p className="text-[#A7ABB3] text-sm md:text-base max-w-[600px] mx-auto leading-relaxed">
-            Grandes operações jurídicas exigem infraestrutura à altura. Juspilot foi projetada para departamentos que operam sob pressão, volume e escrutínio constante.
+            Grandes operações jurídicas exigem infraestrutura à sua altura. Juspilot foi projetada para departamentos que operam sob pressão, volume e escrutínio constante.
           </p>
         </div>
 
@@ -299,17 +309,17 @@ export default function JuspilotPage() {
           {[
             {
               title: "Governança e rastreabilidade total",
-              desc: "Audit logs completos, controle de acesso granular e conformidade LGPD nativa. Cada ação registrada, cada decisão rastreável — para auditorias internas e externas.",
+              desc: "Audit logs completos, controle de acesso granular e conformidade LGPD nativa. Cada ação registrada, cada decisão rastreável. Pronto para auditorias internas e externas.",
               color: "pink",
             },
             {
               title: "IA que responde com evidência",
-              desc: "RAG sobre sua base documental. Busca híbrida semântica em STJ, STF e TST. Nenhuma resposta sem fonte verificável — zero tolerância a alucinação em ambiente corporativo.",
+              desc: "RAG sobre sua base documental. Busca híbrida semântica em STJ, STF e TST. Nenhuma resposta sem fonte verificável. Zero tolerância a alucinação em ambiente corporativo.",
               color: "purple",
             },
             {
               title: "Integração com a sua stack",
-              desc: "API enterprise, SSO, integração com ERPs e sistemas de gestão. Juspilot entra na sua operação sem exigir que você abandone o que já funciona.",
+              desc: "API enterprise, SSO e integração com ERPs e sistemas de gestão. Juspilot entra na sua operação sem exigir que você abandone o que já funciona.",
               color: "pink",
             },
           ].map((item, i) => (
@@ -356,17 +366,17 @@ export default function JuspilotPage() {
               {[
                 {
                   title: "Gestão de Contencioso e Casos",
-                  desc: "Visibilidade total do portfólio jurídico. Kanban por fases, SLA automático, risk assessment e alertas de prazo — para times que gerenciam centenas de casos simultaneamente.",
+                  desc: "Visibilidade total do portfólio jurídico. Kanban por fases, SLA automático, risk assessment e alertas de prazo para times que gerenciam centenas de casos simultaneamente.",
                   icon: Scale,
                 },
                 {
                   title: "IA Jurídica com contexto documental",
-                  desc: "Não é um chatbot genérico. É inteligência treinada sobre sua base documental, com RAG sobre contratos, pareceres e precedentes internos. Respostas com fonte, auditáveis.",
+                  desc: "Não é um chatbot genérico. É inteligência treinada sobre sua base documental, com RAG sobre contratos, pareceres e precedentes internos. Respostas com fonte e auditáveis.",
                   icon: MessageSquare,
                 },
                 {
                   title: "Contratos e Documentos em escala",
-                  desc: "Geração, revisão e versionamento de contratos com IA. Biblioteca de templates corporativos, fluxo de aprovação e export para qualquer formato — sem gargalo no jurídico.",
+                  desc: "Geração, revisão e versionamento de contratos com IA. Biblioteca de templates corporativos, fluxo de aprovação e export para qualquer formato. Sem gargalos no jurídico.",
                   icon: FileText,
                 },
                 {
@@ -376,7 +386,7 @@ export default function JuspilotPage() {
                 },
                 {
                   title: "Automação de Processos Jurídicos",
-                  desc: "Workflows configuráveis para os processos mais críticos do departamento. Aprovações, notificações, escalações e integrações — sem depender de TI para cada mudança.",
+                  desc: "Workflows configuráveis para os processos mais críticos do departamento. Aprovações, notificações, escalações e integrações sem depender de TI para cada mudança.",
                   icon: Workflow,
                 },
               ].map((feature, i) => (
@@ -427,7 +437,7 @@ export default function JuspilotPage() {
             {[
               {
                 question: "Como é feita a implementação em uma operação de grande porte?",
-                answer: "Cada cliente enterprise recebe um gerente de implementação dedicado. O processo inclui mapeamento da operação atual, configuração de workflows, migração de dados e treinamento do time jurídico — com cronograma definido e SLA de go-live.",
+                answer: "Cada cliente enterprise recebe um gerente de implementação dedicado. O processo inclui mapeamento da operação atual, configuração de workflows, migração de dados e treinamento do time jurídico, com cronograma definido e SLA de go-live.",
               },
               {
                 question: "Qual é o modelo de segurança e conformidade com LGPD?",
@@ -439,7 +449,7 @@ export default function JuspilotPage() {
               },
               {
                 question: "Como funciona o suporte para clientes enterprise?",
-                answer: "SLA dedicado com tempo de resposta garantido, gerente de conta exclusivo, canal de suporte prioritário e acesso a roadmap de produto. Clientes enterprise participam do programa de early access para novos módulos.",
+                answer: "SLA dedicado com tempo de resposta garantido, gerente de conta exclusivo e canal de suporte prioritário. Clientes enterprise têm acesso ao roadmap de produto e participam do programa de early access para novos módulos.",
               },
               {
                 question: "É possível customizar a plataforma para a nossa operação?",
@@ -480,11 +490,14 @@ export default function JuspilotPage() {
         style={{
           backgroundImage: `url('/praca-3-poderes-14.webp')`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
+          backgroundPosition: "center top",
+          backgroundAttachment: "scroll",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C0F] via-[#0B0C0F]/60 to-transparent pointer-events-none" />
+        {/* overlay escuro sólido para garantir legibilidade em mobile e desktop */}
+        <div className="absolute inset-0 bg-[#0B0C0F]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0F] via-transparent to-[#0B0C0F]/60 pointer-events-none" />
+
         <div className="max-w-[800px] w-full mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 glass-pill px-4 py-2 rounded-full mb-8 text-xs md:text-sm text-[#A7ABB3]">
             <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
@@ -495,22 +508,35 @@ export default function JuspilotPage() {
             Sua operação jurídica merece infraestrutura à sua altura.
           </h2>
           <p className="text-[#A7ABB3] text-base md:text-lg mb-10 leading-relaxed max-w-[560px] mx-auto">
-            Agende uma conversa com nosso time. Vamos entender sua operação e mostrar como Juspilot se encaixa — sem pitch genérico, sem demo enlatada.
+            Agende uma conversa com nosso time. Vamos entender sua operação e mostrar como Juspilot se encaixa. Sem pitch genérico, sem demo enlatada.
           </p>
 
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-5">
             <Button
               onClick={() => setModalOpen(true)}
-              className="glass-button text-base rounded-full bg-white/5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 text-white px-8 py-6 md:text-base"
+              className="glass-button text-base rounded-full bg-white/5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 text-white px-8 py-6"
             >
-              Agendar conversa com especialista →
+              Agendar conversa com especialista
             </Button>
-            <p className="text-xs text-[#A7ABB3]">Implementação dedicada &nbsp;·&nbsp; SLA enterprise &nbsp;·&nbsp; Acesso por qualificação</p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {["Implementação dedicada", "SLA enterprise", "Acesso por qualificação"].map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/15 bg-white/[0.06] text-[#D4D6DA] backdrop-blur-sm"
+                >
+                  <span className="w-1 h-1 rounded-full bg-pink-400/80 flex-shrink-0" />
+                  {item}
+                </span>
+              ))}
+            </div>
+
             <button
               onClick={() => setModalOpen(true)}
-              className="text-sm text-[#A7ABB3] underline underline-offset-4 hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-medium text-white/80 border border-white/20 rounded-full px-5 py-2.5 hover:bg-white/10 hover:text-white transition-all duration-200"
             >
-              Ver casos de uso de grandes departamentos →
+              Ver casos de uso de grandes departamentos
+              <span className="text-pink-400">→</span>
             </button>
           </div>
         </div>
