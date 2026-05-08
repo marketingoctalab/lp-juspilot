@@ -8,22 +8,14 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Juspilot — Infraestrutura jurídica para grandes operações",
+  title: "Juspilot — Agentes de IA para seu Jurídico",
   description:
     "A plataforma de inteligência jurídica escolhida por departamentos jurídicos de empresas Fortune 500 e escritórios de elite no Brasil. Segurança enterprise, IA com evidência, integração total.",
   generator: "v0.app",
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
+        url: "/favicon.svg",
         type: "image/svg+xml",
       },
     ],
