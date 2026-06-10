@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils"
 import { MonoLabel } from "@/components/ui/mono-label"
 
 interface DarkFeatureBandProps {
+  id?: string
   tone?: "green" | "navy"
   eyebrow?: string
   heading: React.ReactNode
@@ -12,6 +13,7 @@ interface DarkFeatureBandProps {
 }
 
 export function DarkFeatureBand({
+  id,
   tone = "green",
   eyebrow,
   heading,
@@ -22,7 +24,7 @@ export function DarkFeatureBand({
   const toneClass = tone === "green" ? "bg-deep-green" : "bg-dark-navy"
 
   return (
-    <section className="container-page pb-section">
+    <section id={id} className="container-page pb-section">
       <div
         className={cn(
           "rounded-xl px-6 py-16 sm:px-12 sm:py-20 md:px-20 md:py-24",

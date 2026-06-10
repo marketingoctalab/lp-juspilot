@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -77,9 +78,13 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
 
             <h1 className="type-display-xl text-balance text-ink mb-4">
               {title}{" "}
-              <span className="text-coral">
+              <span className="text-coral inline-block min-h-[1.15em] text-left">
                 {displayText}
-                <span className="animate-pulse opacity-70">|</span>
+                {displayText.length > 0 ? (
+                  <span className="animate-pulse opacity-70" aria-hidden>
+                    |
+                  </span>
+                ) : null}
               </span>
             </h1>
 
@@ -97,12 +102,12 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
               </Button>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <div className="flex -space-x-2">
+                <div className="flex -space-x-2" aria-hidden>
                   {avatars.map((avatar, i) => (
                     <Avatar key={i} className="w-8 h-8 border-2 border-page">
-                      <AvatarImage src={avatar.src} alt={avatar.alt} />
-                      <AvatarFallback className="bg-soft-stone text-[10px] text-ink">
-                        {avatar.fallback}
+                      <AvatarImage src={avatar.src || undefined} alt="" />
+                      <AvatarFallback className="bg-soft-stone text-coral/70">
+                        <User className="w-3.5 h-3.5" strokeWidth={2} />
                       </AvatarFallback>
                     </Avatar>
                   ))}

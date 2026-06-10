@@ -1,8 +1,8 @@
 export const pt = {
   meta: {
-    title: "Juspilot: a plataforma de IA para o trabalho jurídico brasileiro",
+    title: "Juspilot: infraestrutura de produção jurídica com IA",
     description:
-      "Pesquisa em STJ, STF, TCU, CARF e TJs com citação vinculada. Minutas, contratos, extração estruturada e workspace colaborativo em um cockpit único. Teste 7 dias grátis.",
+      "Análise de processos com milhares de páginas em segundos. Resumo Analítico, Linha do Tempo, Riscos da Demanda, Jurisprudência Correlata, elaboração de peças e jurimetria. Teste 7 dias grátis.",
   },
   nav: {
     platform: "Plataforma",
@@ -13,155 +13,268 @@ export const pt = {
     switchLang: "English",
   },
   hero: {
-    badge: "Para escritórios, jurídicos in-house e setor público",
-    h1: "A plataforma de IA para o",
+    badge: "Infraestrutura de produção jurídica",
+    h1: "Elaboração de peças e análise de processos",
     animatedTexts: [
-      "trabalho jurídico brasileiro.",
-      "seu próximo caso.",
-      "seu escritório inteiro.",
-      "quem não aceita citação inventada.",
+      "com milhares de páginas em segundos.",
+      "de 2–3 horas para minutos.",
+      "com jurimetria para decidir com dados.",
+      "no tom do seu escritório.",
     ],
-    sub: "Pesquisa em STJ, STF, TCU, CARF e TJs com fonte clicável. Minutas, contratos, extração estruturada e equipe no mesmo caso, sem juntar cinco ferramentas. A IA acelera; você decide.",
+    sub: "A IA que produz o trabalho jurídico: analisa processos volumosos, entrega Resumo Analítico, Linha do Tempo, Riscos e Jurisprudência Correlata, e acelera a elaboração de peças. Complementa seu ERP, não substitui.",
     cta: "Testar 7 dias grátis",
-    socialProof: "Jurídicos brasileiros já operam no cockpit",
+    socialProof: "Escritórios brasileiros já produzem mais em menos tempo",
+  },
+  valueHighlight: {
+    text: "Elaboração de peças e análise de processos, trazendo os pontos críticos de processos com milhares de páginas em segundos.",
+  },
+  processAnalysis: {
+    eyebrow: "Análise de processos",
+    headline: "Entregáveis prontos, não só busca",
+    sub: "A IA lê o acervo do caso e devolve outputs tangíveis que você usa na estratégia e na peça.",
+    speed: {
+      before: "2–3 horas de leitura manual",
+      after: "Minutos com a IA",
+      label: "Milhares de páginas com pontos críticos em segundos",
+    },
+    outputs: [
+      {
+        title: "Resumo Analítico",
+        desc: "Síntese estruturada dos fatos, pedidos, provas e pontos de decisão. O essencial do caso sem ler página por página.",
+      },
+      {
+        title: "Linha do Tempo",
+        desc: "Cronologia processual automática com marcos, prazos e movimentações relevantes em ordem clara.",
+      },
+      {
+        title: "Riscos da Demanda",
+        desc: "Mapeamento dos riscos processuais, vulnerabilidades argumentativas e pontos de atenção para a estratégia.",
+      },
+      {
+        title: "Jurisprudência Correlata",
+        desc: "A IA traz os precedentes do seu caso automaticamente. Você não busca: ela correlaciona decisões relevantes com fonte clicável.",
+      },
+    ],
   },
   logos: {
     label: "Pesquisa conectada aos tribunais e órgãos que você usa",
   },
-  pillars: {
-    eyebrow: "Os pilares",
-    headline: "Três coisas que só uma plataforma vertical brasileira faz.",
-    sub: "Fundamento jurídico, extração de dados e colaboração, sem sair do ambiente e sem alucinação de precedente.",
+  painPoints: {
+    eyebrow: "Produção jurídica",
+    headline: "A IA que produz o trabalho jurídico",
+    sub: "Análise, peças e estratégia no centro. Gestão e ERP ficam em segundo plano.",
     items: [
       {
-        title: "Pesquisa com fundamento",
-        desc: "STJ, STF, TCU, CARF, TJDFT, TJSP e TJMT na busca híbrida. Toda resposta com fonte clicável e status do precedente, sem invenção e sem citação falsa.",
+        title: "Análise de processos volumosos",
+        desc: "Resumo Analítico, Linha do Tempo, Riscos da Demanda e Jurisprudência Correlata. Milhares de páginas em segundos, não em horas.",
+        highlight: true,
       },
       {
-        title: "Extração estruturada",
-        desc: "De contrato, petição ou edital direto para JSON validado. Use presets ou descreva em texto o que extrair. A IA cria o schema.",
+        title: "Elaboração de peças",
+        desc: "Petições, contestações e recursos no tom do escritório. De rascunho a peça revisável em minutos, não em horas.",
+        highlight: true,
       },
       {
-        title: "Workspace colaborativo",
-        desc: "Equipe junto no mesmo caso, com presença em tempo real, chat e trilha de atividade. Sai do WhatsApp para uma plataforma com rastreabilidade.",
+        title: "Jurimetria",
+        desc: "Probabilidade de êxito por tese, perfil de magistrados e tendências por tribunal. Estratégia com dados reais.",
+        highlight: true,
+      },
+      {
+        title: "Jurisprudência correlata",
+        desc: "Precedentes trazidos automaticamente para o seu caso. Sem fonte inventada, sem busca manual dispersa.",
+        highlight: false,
+      },
+      {
+        title: "Base de conhecimento própria",
+        desc: "IA treinada com as peças e padrões do escritório. Seus documentos viram referência para toda a equipe.",
+        highlight: false,
       },
     ],
   },
   jurisprudence: {
-    eyebrow: "A jurisprudência",
-    headline: "Onde o seu caso é decidido.",
-    sub: "STJ Precedentes Qualificados, STF Repercussão Geral, TCU, CARF e TJs com busca híbrida e citação vinculada. Status do precedente (vigente, superado, cancelado) acompanhado em tempo real.",
-    chips: ["STJ", "STF", "TCU", "CARF", "TJDFT", "TJSP", "TJMT"],
+    eyebrow: "Jurisprudência correlata",
+    headline: "A IA traz os precedentes do seu caso.",
+    sub: "Diferente de busca genérica: o Juspilot correlaciona automaticamente decisões relevantes ao processo analisado. Fonte clicável, status do precedente e sem alucinação. Sem fonte, não cita.",
+    chips: ["Correlata ao caso", "STJ", "STF", "TJs", "Fonte clicável", "Sem alucinação"],
   },
-  modules: {
-    eyebrow: "O cockpit",
-    headline: "Casos, prazos e contratos no mesmo painel.",
-    sub: "Cada caso com seu chat, suas minutas, seus documentos e seus prazos. Quando a IA pode mover, ela move. Quando precisa de você, ela espera.",
-    items: [
+  jurimetria: {
+    eyebrow: "Novo no Juspilot",
+    headline: "Jurimetria: decida com dados, não com intuição.",
+    sub: "Funcionalidade nova e um dos maiores diferenciais. Cruza milhares de decisões para mostrar taxas de êxito, padrões de magistrados e tendências por tribunal antes de você investir horas no caso.",
+    pillars: [
       {
-        title: "Gestão de Casos",
-        desc: "Kanban por fases, SLA, prazos e alertas. Visibilidade do portfólio sem planilha paralela.",
-        href: "https://juspilot.ai/produtos/board",
+        title: "Probabilidade de êxito",
+        desc: "Taxa histórica por tese, vara e tribunal para embasar a estratégia.",
       },
       {
-        title: "Minutas com IA",
-        desc: "Peças com o tom do escritório. Templates, versionamento e export PDF/DOCX.",
-        href: "https://juspilot.ai/produtos/drafts",
+        title: "Perfil de magistrados",
+        desc: "Padrões de decisão e tendências do juiz ou relator do seu caso.",
       },
       {
-        title: "Jurisprudência",
-        desc: "Busca híbrida com citação ABNT. Sem fonte, não cita.",
-        href: "https://juspilot.ai/produtos/analyze",
-      },
-      {
-        title: "Contratos e Assinatura",
-        desc: "Análise de cláusulas, assinatura Lei 14.063 e audit trail, sem sair do caso.",
-        href: "https://juspilot.ai/produtos/signature",
-      },
-      {
-        title: "CRM Jurídico",
-        desc: "Clientes, oportunidades e pipeline comercial integrados ao jurídico.",
-        href: "https://juspilot.ai/produtos/crm",
-      },
-      {
-        title: "Agentes e Workflows",
-        desc: "Automações e agentes de IA sobre os documentos da sua organização.",
-        href: "https://juspilot.ai/plataforma",
+        title: "Inteligência por tribunal",
+        desc: "Prazos médios, resultados por área e cenários comparáveis.",
       },
     ],
   },
-  segments: {
-    eyebrow: "Para quem é",
-    headline: "Feita para quem assina com o nome na petição.",
-    sub: "Escritórios, departamentos jurídicos e setor público, com a mesma exigência de fundamento e rastro.",
-    learnMore: "Saiba mais",
-    items: [
+  impact: {
+    eyebrow: "Resultado",
+    headline: "O impacto no seu escritório",
+    metrics: [
       {
-        title: "Advocacia",
-        desc: "Capacidade de escritório grande, sem o time grande. Do precedente à assinatura, num fluxo só.",
-        href: "https://juspilot.ai/advocacia",
+        value: "492,8h",
+        label: "Horas economizadas/mês",
+        detail: "35,2h por advogado",
       },
       {
-        title: "Departamentos jurídicos",
-        desc: "De admin a estratégico, sem aumentar o time. A IA que trabalha sobre os documentos da empresa.",
-        href: "https://juspilot.ai/departamentos-juridicos",
+        value: "R$ 98.560",
+        label: "Valor gerado/mês",
+        detail: "Baseado em R$ 200/hora",
       },
       {
-        title: "Governo",
-        desc: "Volume alto, equipe enxuta, zero margem para precedente inventado. Decisão sempre humana.",
-        href: "https://juspilot.ai/governo",
+        value: "19,7x",
+        label: "Retorno sobre investimento",
+        detail: "ROI de 1.871%",
       },
     ],
+    premises:
+      "Premissas: 14 advogados · 176h/mês cada · 40% do tempo em peças e pesquisa · Redução conservadora de 50% · R$ 200/hora média",
+    disclaimer:
+      "Estimativa conservadora. Escritórios que utilizam intensivamente a base de conhecimento própria reportam ganhos ainda maiores.",
   },
-  security: {
-    eyebrow: "Segurança e LGPD",
-    headline: "Seus dados ficam com você. No Brasil.",
-    sub: "Criptografia AES-256, soberania de dados em São Paulo, zero retenção nos provedores de IA. Seus documentos não treinam modelos públicos.",
-    items: [
-      "LGPD conforme",
-      "Dados em soberania nacional",
-      "Documentos não treinam IA",
-      "Citação vinculada por design",
+  platform: {
+    eyebrow: "Produção jurídica",
+    headline: "O que o Juspilot faz de diferente",
+    sub: "Análise de processos, elaboração de peças e jurimetria no centro. Gestão e integrações complementam seu ERP.",
+    supportHeadline: "Apoio operacional",
+    supportSub: "Complementa Astrea, Projuris e outros ERPs. O Juspilot é a camada de inteligência, não mais um sistema de gestão.",
+    featured: [
+      {
+        title: "Análise de Processos",
+        desc: "Milhares de páginas em segundos. A IA entrega os outputs que você usa na estratégia e na peça.",
+        bullets: [
+          "Resumo Analítico",
+          "Linha do Tempo",
+          "Riscos da Demanda",
+          "Jurisprudência Correlata",
+        ],
+        badge: "",
+        featured: true,
+      },
+      {
+        title: "Elaboração de Peças",
+        desc: "Petições, contestações e recursos no tom do escritório. Produção acelerada com revisão humana obrigatória.",
+        bullets: [
+          "Tom e padrão do escritório",
+          "Templates e versionamento",
+          "Export PDF e DOCX",
+          "Integrado à análise do caso",
+        ],
+        badge: "",
+        featured: true,
+      },
+      {
+        title: "Jurimetria",
+        desc: "Estratégia processual com dados reais. Saiba a probabilidade de êxito antes de investir tempo no caso.",
+        bullets: [
+          "Taxa de êxito por tese e vara",
+          "Perfil de decisão de magistrados",
+          "Tendências por tribunal e área",
+        ],
+        badge: "NOVO",
+        featured: true,
+      },
+      {
+        title: "Base de Conhecimento Personalizada",
+        desc: "A IA aprende o estilo, a linha argumentativa e a formatação do seu escritório.",
+        bullets: [
+          "Peças do escritório como referência",
+          "Tom consistente em toda a equipe",
+        ],
+        badge: "EXCLUSIVO",
+        featured: true,
+      },
+    ],
+    modules: [
+      { title: "Gestão de Casos", desc: "Kanban e prazos. Complementa seu ERP" },
+      { title: "API REST", desc: "Integração com Astrea, Projuris e outros" },
+      { title: "Workflows", desc: "Automações no-code" },
+      { title: "Contratos", desc: "Geração e assinatura digital" },
+      { title: "Data Room", desc: "Repositório seguro" },
+      { title: "Portal Jurídico", desc: "Captação de clientes" },
+    ],
+  },
+  compliance: {
+    eyebrow: "Confiança",
+    headline: "Conformidade e segurança que o seu escritório exige",
+    sub: "IA como ferramenta do advogado, com proteção de dados e sigilo profissional.",
+    columns: [
+      {
+        title: "Conformidade OAB",
+        items: [
+          "IA como assistente, não substituto do advogado",
+          "Transparência sobre uso de inteligência artificial",
+          "Revisão humana obrigatória em todas as peças",
+          "Sigilo profissional preservado em cada interação",
+        ],
+      },
+      {
+        title: "Segurança de Dados",
+        items: [
+          "AWS com criptografia em trânsito e em repouso",
+          "Dados isolados por escritório (multi-tenant seguro)",
+          "Backup diário com retenção de 30 dias",
+          "Controle de permissões em 3 níveis",
+          "Conformidade LGPD",
+        ],
+      },
     ],
   },
   faq: {
     tag: "Dúvidas frequentes",
     headline1: "Antes de",
     headline2: "começar",
-    sub: "Respostas diretas para quem quer testar com segurança.",
+    sub: "Respostas diretas sobre análise de processos, peças e segurança dos seus dados.",
     items: [
       {
+        question: "O que é a Jurimetria do Juspilot?",
+        answer: "É a análise estatística de decisões judiciais para estimar probabilidade de êxito, identificar padrões de magistrados e tendências por tribunal. Você embasa a estratégia do caso com dados reais, integrados à pesquisa e à elaboração de peças.",
+      },
+      {
+        question: "Quais entregáveis a análise de processos gera?",
+        answer: "Resumo Analítico, Linha do Tempo, Riscos da Demanda e Jurisprudência Correlata. A IA lê milhares de páginas em segundos e devolve outputs prontos para estratégia e elaboração de peças. O que levava 2–3 horas de leitura manual vira minutos.",
+      },
+      {
+        question: "O Juspilot substitui meu ERP (Astrea, Projuris)?",
+        answer: "Não. O Juspilot é a camada de inteligência para produção jurídica: análise, peças e jurimetria. Gestão de casos e integrações complementam seu ERP existente via API.",
+      },
+      {
         question: "O Juspilot substitui o trabalho do advogado?",
-        answer: "Não. A plataforma amplifica sua capacidade operacional em pesquisa, minuta, extração e gestão, mas a decisão jurídica continua humana. A IA acelera; você decide.",
+        answer: "Não. A plataforma acelera análise, pesquisa e elaboração de peças, mas a decisão jurídica e a revisão final são sempre humanas, em conformidade com a OAB.",
+      },
+      {
+        question: "A IA pode inventar jurisprudência?",
+        answer: "Não. O agente só cita o que foi recuperado da base de STJ, STF, TCU, CARF e TJs, com fonte clicável e status do precedente. Sem fonte, não cita.",
       },
       {
         question: "Meus dados são usados para treinar IA pública?",
-        answer: "Não. Seus documentos ficam segregados por organização, com criptografia em repouso e em trânsito. Provedores de IA operam com zero retenção de dados para treinamento.",
+        answer: "Não. Seus documentos ficam segregados por escritório, com criptografia em repouso e em trânsito. Provedores de IA operam com zero retenção para treinamento.",
       },
       {
         question: "Como funciona o teste de 7 dias?",
         answer: "Você acessa o plano completo por 7 dias. Cadastro em cerca de 1 minuto. Cancele quando quiser, sem multa e sem burocracia.",
       },
-      {
-        question: "A IA pode inventar jurisprudência?",
-        answer: "O agente só cita o que foi recuperado da base de STJ, STF, TCU, CARF e TJs, com fonte clicável e status do precedente. Sem fonte, não cita.",
-      },
-      {
-        question: "Funciona para o meu escritório ou departamento?",
-        answer: "Sim, para bancas solo a grandes operações. Planos por assento, workspace colaborativo, CRM, contratos e integrações via API para times que precisam escalar.",
-      },
     ],
   },
   cta: {
     badge: "Próximos passos",
-    headline: "Comece pelo seu próximo caso.",
-    sub: "7 dias grátis do plano completo. Cancele quando quiser. Cadastro em 1 minuto.",
+    headline: "Pare de perder horas em processos volumosos.",
+    sub: "Teste 7 dias grátis. Análise de processos, elaboração de peças e jurimetria. Complementa o ERP que você já usa.",
     primary: "Testar 7 dias grátis",
     secondary: "Ver planos",
     secondaryHref: "https://juspilot.ai/pricing",
   },
   footer: {
-    tagline: "Plataforma de IA para o trabalho jurídico brasileiro para escritórios, departamentos jurídicos e setor público.",
+    tagline: "Infraestrutura de produção jurídica: análise de processos, elaboração de peças e jurimetria com IA.",
     columns: {
       product: "Produto",
       resources: "Recursos",

@@ -1,26 +1,28 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState, use } from "react"
-import { ScrollText, Database, Users, ChevronDown } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { HeroSection } from "@/components/ui/hero-section"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ContactModal } from "@/components/contact-modal"
 import { SectionHeading } from "@/components/marketing/section-heading"
-import { FeatureCard } from "@/components/marketing/feature-card"
 import { DarkFeatureBand } from "@/components/marketing/dark-feature-band"
 import { CtaBand } from "@/components/marketing/cta-band"
-import { ModuleCard } from "@/components/marketing/module-card"
-import { SegmentCard } from "@/components/marketing/segment-card"
 import { MonoLabel } from "@/components/ui/mono-label"
+import { ValueHighlight } from "@/components/marketing/value-highlight"
+import { ProcessOutputs } from "@/components/marketing/process-outputs"
+import { SpeedMetric } from "@/components/marketing/speed-metric"
+import { PainPointList } from "@/components/marketing/pain-point-list"
+import { ImpactBand } from "@/components/marketing/impact-band"
+import { PlatformShowcase } from "@/components/marketing/platform-showcase"
+import { ComplianceSection } from "@/components/marketing/compliance-section"
 import { getTranslations, locales } from "@/lib/i18n"
 import type { Locale } from "@/lib/i18n"
 import { notFound } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { LpPageTracker } from "@/components/analytics/lp-page-tracker"
 import { trackCTAClick } from "@/lib/analytics"
-
-const PILLAR_ICONS = [ScrollText, Database, Users]
 
 const HERO_AVATARS = [
   { src: "", alt: "Usuário 1", fallback: "JS" },
@@ -105,6 +107,25 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
           onCtaClick={() => openContact("hero", "hero_primary")}
         />
 
+        <ValueHighlight text={t.valueHighlight.text} />
+
+        <section id="analise" aria-label="Análise de processos" className="container-page section-y animate-on-scroll">
+          <SectionHeading
+            eyebrow={t.processAnalysis.eyebrow}
+            heading={t.processAnalysis.headline}
+            description={t.processAnalysis.sub}
+            className="mb-8 sm:mb-10"
+          />
+          <div className="mb-10 sm:mb-12 rounded-xl border border-hairline bg-soft-stone/60 px-6 py-8 sm:px-10">
+            <SpeedMetric
+              before={t.processAnalysis.speed.before}
+              after={t.processAnalysis.speed.after}
+              label={t.processAnalysis.speed.label}
+            />
+          </div>
+          <ProcessOutputs items={t.processAnalysis.outputs} />
+        </section>
+
         <section className="relative py-10 sm:py-12 border-y border-hairline bg-page overflow-hidden">
           <MonoLabel tone="muted" className="block text-center mb-6 sm:mb-8 px-4">
             {t.logos.label}
@@ -137,27 +158,28 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
           </div>
         </section>
 
-        <section id="pilares" aria-label="Pilares da plataforma" className="container-page section-y animate-on-scroll">
+        <section id="dores" aria-label="Dores do dia a dia" className="container-page section-y animate-on-scroll">
           <SectionHeading
-            eyebrow={t.pillars.eyebrow}
-            heading={t.pillars.headline}
-            description={t.pillars.sub}
-            className="mb-10 sm:mb-12"
+            eyebrow={t.painPoints.eyebrow}
+            heading={t.painPoints.headline}
+            description={t.painPoints.sub}
+            className="mb-8 sm:mb-10"
           />
-          <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
-            {t.pillars.items.map((item, i) => {
-              const Icon = PILLAR_ICONS[i]
-              return (
-                <FeatureCard
-                  key={item.title}
-                  icon={<Icon className="h-7 w-7" strokeWidth={1.4} />}
-                  title={item.title}
-                  description={item.desc}
-                  surface="soft-stone"
-                />
-              )
-            })}
-          </div>
+          <PainPointList items={t.painPoints.items} />
+        </section>
+
+        <section id="impacto" aria-label="Impacto no escritório" className="container-page section-y animate-on-scroll">
+          <SectionHeading
+            align="center"
+            eyebrow={t.impact.eyebrow}
+            heading={t.impact.headline}
+            className="mb-8 sm:mb-10 mx-auto"
+          />
+          <ImpactBand
+            metrics={t.impact.metrics}
+            premises={t.impact.premises}
+            disclaimer={t.impact.disclaimer}
+          />
         </section>
 
         <DarkFeatureBand
@@ -177,67 +199,49 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
           </div>
         </DarkFeatureBand>
 
-        <section id="modulos" aria-label="Módulos da plataforma" className="container-page section-y animate-on-scroll">
-          <SectionHeading
-            eyebrow={t.modules.eyebrow}
-            heading={t.modules.headline}
-            description={t.modules.sub}
-            className="mb-8 sm:mb-10"
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {t.modules.items.map((mod) => (
-              <ModuleCard
-                key={mod.title}
-                title={mod.title}
-                description={mod.desc}
-                href={mod.href}
-              />
+        <DarkFeatureBand
+          id="jurimetria"
+          tone="navy"
+          eyebrow={t.jurimetria.eyebrow}
+          heading={t.jurimetria.headline}
+          body={t.jurimetria.sub}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            {t.jurimetria.pillars.map((pillar) => (
+              <div key={pillar.title} className="border-t border-white/15 pt-5">
+                <h3 className="type-title-sm text-on-dark mb-2">{pillar.title}</h3>
+                <p className="type-body-sm text-on-dark-soft">{pillar.desc}</p>
+              </div>
             ))}
           </div>
+        </DarkFeatureBand>
+
+        <section id="plataforma" aria-label="Plataforma completa" className="container-page section-y animate-on-scroll">
+          <SectionHeading
+            eyebrow={t.platform.eyebrow}
+            heading={t.platform.headline}
+            description={t.platform.sub}
+            className="mb-8 sm:mb-10"
+          />
+          <PlatformShowcase
+            featured={t.platform.featured.map((item) => ({
+              ...item,
+              badge: item.badge || undefined,
+            }))}
+            modules={t.platform.modules}
+            supportHeadline={t.platform.supportHeadline}
+            supportSub={t.platform.supportSub}
+          />
         </section>
 
-        <section id="segmentos" aria-label="Segmentos" className="bg-soft-stone animate-on-scroll">
-          <div className="container-page section-y">
-            <SectionHeading
-              align="center"
-              eyebrow={t.segments.eyebrow}
-              heading={t.segments.headline}
-              description={t.segments.sub}
-              className="mb-10 sm:mb-12 mx-auto"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-              {t.segments.items.map((seg) => (
-                <SegmentCard
-                  key={seg.title}
-                  title={seg.title}
-                  description={seg.desc}
-                  href={seg.href}
-                  learnMoreLabel={t.segments.learnMore}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="seguranca" aria-label="Segurança e LGPD" className="container-page section-y animate-on-scroll">
-          <div className="rounded-xl border border-hairline bg-canvas px-5 py-10 sm:px-12 sm:py-16">
-            <SectionHeading
-              eyebrow={t.security.eyebrow}
-              heading={t.security.headline}
-              description={t.security.sub}
-              className="mb-6 sm:mb-8"
-            />
-            <div className="flex flex-wrap gap-2 sm:gap-3">
-              {t.security.items.map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center rounded-full bg-pale-green border border-hairline px-3 sm:px-4 py-2 type-caption text-ink"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
+        <section id="conformidade" aria-label="Conformidade e segurança" className="container-page section-y animate-on-scroll">
+          <SectionHeading
+            eyebrow={t.compliance.eyebrow}
+            heading={t.compliance.headline}
+            description={t.compliance.sub}
+            className="mb-8 sm:mb-10"
+          />
+          <ComplianceSection columns={t.compliance.columns} />
         </section>
 
         <section id="faq" aria-label="Perguntas frequentes" className="container-page section-y animate-on-scroll">

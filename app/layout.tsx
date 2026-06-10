@@ -15,13 +15,17 @@ const BASE_URL = "https://lp.juspilot.ai"
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Juspilot: a plataforma de IA para o trabalho jurídico brasileiro",
+    default: "Juspilot: infraestrutura de produção jurídica com IA",
     template: "%s | Juspilot",
   },
   description:
-    "Pesquisa em STJ, STF, TCU, CARF e TJs com citação vinculada. Minutas, contratos, extração estruturada e workspace colaborativo em um cockpit único. Teste 7 dias grátis.",
+    "Análise de processos com milhares de páginas em segundos. Resumo Analítico, Linha do Tempo, Riscos, Jurisprudência Correlata, peças e jurimetria. Teste 7 dias grátis.",
   keywords: [
-    "plataforma jurídica IA",
+    "análise de processos com IA",
+    "resumo analítico processo",
+    "jurisprudência correlata",
+    "jurimetria jurídica",
+    "elaboração de peças jurídicas",
     "inteligência artificial jurídica",
     "software jurídico Brasil",
     "gestão de casos jurídicos",
@@ -48,23 +52,23 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: BASE_URL,
     siteName: "Juspilot",
-    title: "Juspilot: a plataforma de IA para o trabalho jurídico brasileiro",
+    title: "Juspilot: infraestrutura de produção jurídica com IA",
     description:
-      "Pesquisa em STJ, STF, TCU, CARF e TJs com citação vinculada. Minutas, contratos e workspace colaborativo em um cockpit único. Teste 7 dias grátis.",
+      "Resumo Analítico, Linha do Tempo, Riscos da Demanda, Jurisprudência Correlata, peças e jurimetria. Milhares de páginas em segundos.",
     images: [
       {
         url: "/screenshots/hero.png",
         width: 1200,
         height: 630,
-        alt: "Juspilot: plataforma de IA jurídica",
+        alt: "Juspilot: elaboração de peças e análise de processos com IA",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Juspilot: agentes de IA para seu jurídico",
+    title: "Juspilot: infraestrutura de produção jurídica",
     description:
-      "A plataforma jurídica brasileira com IA. Casos, minutas, contratos, jurisprudência e workflows em um único lugar.",
+      "Análise de processos, elaboração de peças e jurimetria. De 2–3 horas para minutos. Complementa seu ERP.",
     images: ["/screenshots/hero.png"],
     creator: "@juspilot",
   },
