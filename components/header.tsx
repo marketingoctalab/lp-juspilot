@@ -38,13 +38,11 @@ export function Header({ locale = 'pt', t }: HeaderProps) {
   };
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    const handleScroll = () => setIsScrolled(window.scrollY > 16);
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const transparent = !isScrolled && !mobileMenuOpen;
 
   const navigation = DEFAULT_NAV.map((item) => ({
     name: navLabels[item.key],
@@ -54,16 +52,16 @@ export function Header({ locale = 'pt', t }: HeaderProps) {
   return (
     <header
       className={cn(
-        'fixed top-0 inset-x-0 z-50 transition-[background,border-color,backdrop-filter] duration-300',
-        transparent
-          ? 'bg-transparent border-b border-transparent'
-          : 'bg-[#0B0C0F]/85 backdrop-blur-xl border-b border-white/10'
+        'fixed top-0 inset-x-0 z-50 transition-[background,border-color,backdrop-filter] duration-200',
+        isScrolled || mobileMenuOpen
+          ? 'bg-page/85 backdrop-blur-md border-b border-hairline'
+          : 'bg-transparent border-b border-transparent',
       )}
     >
-      <nav className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-6 md:px-10">
-        <div className="flex items-center gap-9">
+      <nav className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6 md:px-8">
+        <div className="flex items-center gap-10">
           <Link href={`/${locale}`} aria-label="Juspilot" className="flex items-center shrink-0">
-            <Logo size="sm" variant="light" />
+            <Logo size="sm" variant="dark" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
@@ -74,8 +72,8 @@ export function Header({ locale = 'pt', t }: HeaderProps) {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    'notion-nav transition-colors',
-                    active ? 'text-white font-semibold' : 'text-white/65 hover:text-white'
+                    'type-nav-link transition-colors',
+                    active ? 'text-ink' : 'text-body-muted hover:text-ink',
                   )}
                 >
                   {item.name}
@@ -85,15 +83,14 @@ export function Header({ locale = 'pt', t }: HeaderProps) {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
           <LanguageSwitcher
             currentLocale={locale}
             label={navLabels.switchLang ?? (locale === 'pt' ? 'English' : 'Português')}
-            className="text-sm text-white/60 hover:text-white transition-colors cursor-pointer"
+            className="type-nav-link text-body-muted hover:text-ink transition-colors"
           />
           <Button
             size="sm"
-            className="bg-[#D97757] text-white hover:bg-[#c66747] border-0"
             onClick={() => window.dispatchEvent(new CustomEvent('juspilot:open-contact'))}
           >
             {navLabels.cta}
@@ -103,7 +100,7 @@ export function Header({ locale = 'pt', t }: HeaderProps) {
         <button
           type="button"
           aria-label="Menu"
-          className="lg:hidden p-2 text-white/65 hover:text-white"
+          className="lg:hidden p-2 text-body-muted hover:text-ink"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -116,26 +113,26 @@ export function Header({ locale = 'pt', t }: HeaderProps) {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="lg:hidden absolute left-4 right-4 top-[calc(100%+4px)] rounded-[12px] bg-white border border-black/[0.08] shadow-card p-5 space-y-1"
+            className="lg:hidden absolute left-4 right-4 top-[calc(100%+8px)] rounded-lg border border-hairline bg-canvas p-4 space-y-1 shadow-lg"
           >
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="block px-3 py-2 rounded-[5px] notion-nav text-ink hover:bg-black/[0.04]"
+                className="block px-3 py-2 rounded-md type-nav-link text-ink hover:bg-soft-stone/60"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="pt-3 mt-3 border-t border-black/[0.06] flex flex-col gap-2">
+            <div className="pt-3 mt-3 border-t border-hairline flex flex-col gap-2">
               <LanguageSwitcher
                 currentLocale={locale}
                 label={navLabels.switchLang ?? (locale === 'pt' ? 'English' : 'Português')}
-                className="w-full text-center px-4 py-2 rounded-lg border border-black/10 text-sm text-ink/70 hover:bg-black/[0.04] transition-colors"
+                className="w-full text-center px-4 py-2 rounded-md type-nav-link text-body-muted hover:bg-soft-stone/60 transition-colors"
               />
               <Button
-                className="w-full bg-[#D97757] text-white hover:bg-[#c66747] border-0"
+                className="w-full"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   window.dispatchEvent(new CustomEvent('juspilot:open-contact'));

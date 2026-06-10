@@ -2,24 +2,40 @@
 
 import Link from 'next/link'
 import { Logo } from '@/components/ui/logo'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 export function EnterpriseNavbar() {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 16)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   function scrollToForm() {
     document.getElementById('formulario')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-sm" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-      <nav className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-4 md:px-10">
+    <header
+      className={cn(
+        'fixed top-0 inset-x-0 z-50 transition-[background,border-color,backdrop-filter] duration-200',
+        isScrolled
+          ? 'bg-page/85 backdrop-blur-md border-b border-hairline'
+          : 'bg-transparent border-b border-transparent',
+      )}
+    >
+      <nav className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6 md:px-8">
         <Link href="/enterprise" aria-label="Juspilot Enterprise">
-          <Logo size="sm" variant="light" />
+          <Logo size="sm" variant="dark" />
         </Link>
-        <button
-          onClick={scrollToForm}
-          className="text-xs md:text-sm font-medium text-white/70 hover:text-white border border-white/20 hover:border-white/40 rounded-lg px-3 py-2 md:px-4 transition-all duration-200 whitespace-nowrap"
-        >
+        <Button size="sm" variant="secondary" onClick={scrollToForm}>
           Falar com especialista →
-        </button>
+        </Button>
       </nav>
     </header>
   )

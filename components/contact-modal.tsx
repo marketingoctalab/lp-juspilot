@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import type { Locale, Translations } from '@/lib/i18n'
 
 const CARGO_LIST = [
@@ -159,19 +160,19 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
 
-      <div className="relative w-full max-w-lg bg-[#0F1014] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-        <div className="flex items-start justify-between p-6 pb-4 border-b border-white/5">
+      <div className="relative w-full max-w-lg bg-canvas border border-hairline rounded-xl shadow-soft-lift overflow-hidden">
+        <div className="flex items-start justify-between p-6 pb-4 border-b border-hairline">
           <div>
-            <h2 id="modal-title" className="font-serif text-xl md:text-2xl font-medium text-white">
+            <h2 id="modal-title" className="type-title-lg text-ink">
               {t.title}
             </h2>
-            <p className="text-xs text-[#A7ABB3] mt-1">{t.subtitle}</p>
+            <p className="type-caption text-slate mt-1">{t.subtitle}</p>
           </div>
           <button
             onClick={handleClose}
-            className="text-[#A7ABB3] hover:text-white transition-colors ml-4 mt-0.5 shrink-0"
+            className="text-slate hover:text-ink transition-colors ml-4 mt-0.5 shrink-0"
             aria-label={t.close}
           >
             <X className="w-5 h-5" />
@@ -181,16 +182,16 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
         <div className="p-6">
           {formState === 'success' ? (
             <div className="py-8 text-center">
-              <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 rounded-full bg-pale-green border border-hairline flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="font-serif text-lg text-white mb-2">{t.success.title}</h3>
-              <p className="text-sm text-[#A7ABB3] max-w-xs mx-auto">{t.success.body}</p>
+              <h3 className="type-title-md text-ink mb-2">{t.success.title}</h3>
+              <p className="type-body-sm text-body-muted max-w-xs mx-auto">{t.success.body}</p>
               <button
                 onClick={handleClose}
-                className="mt-6 text-xs text-[#A7ABB3] underline underline-offset-4 hover:text-white transition-colors"
+                className="mt-6 type-caption text-slate underline underline-offset-4 hover:text-ink transition-colors"
               >
                 {t.success.close}
               </button>
@@ -274,15 +275,15 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
                 </Field>
               </div>
 
-              <button
+              <Button
                 type="submit"
                 disabled={formState === 'submitting'}
-                className="w-full mt-2 px-6 py-3 rounded-xl text-sm font-medium text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full mt-2"
               >
                 {formState === 'submitting' ? t.submitting : `${t.submit} →`}
-              </button>
+              </Button>
 
-              <p className="text-[10px] text-[#A7ABB3] text-center">{t.lgpd}</p>
+              <p className="type-caption text-slate text-center">{t.lgpd}</p>
             </form>
           )}
         </div>
@@ -294,17 +295,17 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs text-[#A7ABB3] font-medium">{label}</label>
+      <label className="type-caption text-body-muted">{label}</label>
       {children}
-      {error && <span className="text-[10px] text-red-400">{error}</span>}
+      {error && <span className="text-[10px] text-error">{error}</span>}
     </div>
   )
 }
 
 function inputClass(hasError: boolean) {
   return cn(
-    'w-full px-3 py-2.5 rounded-lg text-sm text-white bg-white/5 border transition-all duration-200 outline-none placeholder-[#6B7280]',
-    'focus:bg-white/8 focus:border-white/30 focus:ring-1 focus:ring-white/10',
-    hasError ? 'border-red-400/50' : 'border-white/10'
+    'w-full px-3 py-2.5 rounded-md text-sm text-ink bg-canvas border transition-all duration-200 outline-none placeholder:text-muted',
+    'focus:border-brand focus:[box-shadow:var(--shadow-focus-ring)]',
+    hasError ? 'border-error' : 'border-hairline',
   )
 }

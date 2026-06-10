@@ -4,6 +4,8 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { HeroBackground } from "@/components/marketing/hero-background"
+import { MonoLabel } from "@/components/ui/mono-label"
 
 export interface HeroSectionProps extends React.HTMLAttributes<HTMLDivElement> {
   badge: string
@@ -50,76 +52,54 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
       <section
         ref={ref}
         className={cn(
-          "relative flex flex-col items-center justify-center text-center px-4 pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden",
-          className
+          "hero-section relative overflow-hidden",
+          className,
         )}
         {...props}
       >
-        {/* Subtle radial glow behind text */}
-        <div
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(217,119,87,0.10) 0%, transparent 70%)",
-          }}
-        />
+        <HeroBackground />
+        <div className="container-page relative pt-28 pb-16 md:pt-36 md:pb-24">
+          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+            <MonoLabel tone="muted" className="mb-6">
+              {badge}
+            </MonoLabel>
 
-        <div className="max-w-4xl w-full">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-8 text-xs md:text-sm text-[#A7ABB3] backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D97757] animate-pulse" />
-            {badge}
-          </div>
-
-          {/* Heading */}
-          <h1 className="font-serif font-light text-[38px] leading-[1.1] sm:text-[54px] md:text-[72px] lg:text-[86px] md:leading-[1.05] mb-4 text-balance text-[#F2F3F5]">
-            {title}
-            <span className="relative mt-3 block w-fit mx-auto">
-              {/* dashed border */}
-              <span className="absolute inset-0 -z-10 -m-2 pointer-events-none">
-                <span className="absolute inset-0 border border-dashed border-[#D97757]/50 rounded-2xl" />
-              </span>
-              <span className="text-[#D97757] min-h-[1.2em] inline-block px-2">
+            <h1 className="type-display-xl text-balance text-[clamp(36px,5.6vw,72px)] leading-[1.04] tracking-[-0.035em] text-ink mb-4">
+              {title}{" "}
+              <span className="text-coral">
                 {displayText}
                 <span className="animate-pulse opacity-70">|</span>
               </span>
-            </span>
-          </h1>
+            </h1>
 
-          {/* Subtitle */}
-          <p className="mt-8 text-base md:text-lg leading-relaxed text-[#A7ABB3] max-w-2xl mx-auto">
-            {subtitle}
-          </p>
-        </div>
+            <p className="type-body-md text-body-muted max-w-2xl mt-6">
+              {subtitle}
+            </p>
 
-        {/* CTA + social proof */}
-        <div className="mt-12 flex flex-col items-center gap-6">
-          <Button
-            size="lg"
-            className="px-10 py-6 text-base rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-white"
-            onClick={onCtaClick}
-          >
-            {ctaButtonText}
-          </Button>
+            <div className="mt-10 flex flex-col items-center gap-6">
+              <Button size="lg" onClick={onCtaClick}>
+                {ctaButtonText}
+              </Button>
 
-          {/* Social proof */}
-          <div className="flex items-center justify-center gap-3">
-            <div className="flex -space-x-3">
-              {avatars.map((avatar, i) => (
-                <Avatar key={i} className="w-8 h-8 border-2 border-[#0B0C0F]">
-                  <AvatarImage src={avatar.src} alt={avatar.alt} />
-                  <AvatarFallback className="bg-white/10 text-[10px] text-white">
-                    {avatar.fallback}
-                  </AvatarFallback>
-                </Avatar>
-              ))}
+              <div className="flex items-center justify-center gap-3">
+                <div className="flex -space-x-2">
+                  {avatars.map((avatar, i) => (
+                    <Avatar key={i} className="w-8 h-8 border-2 border-page">
+                      <AvatarImage src={avatar.src} alt={avatar.alt} />
+                      <AvatarFallback className="bg-soft-stone text-[10px] text-ink">
+                        {avatar.fallback}
+                      </AvatarFallback>
+                    </Avatar>
+                  ))}
+                </div>
+                <p className="type-caption text-slate">{socialProofText}</p>
+              </div>
             </div>
-            <p className="text-sm text-[#A7ABB3]">{socialProofText}</p>
           </div>
         </div>
       </section>
     )
-  }
+  },
 )
 
 HeroSection.displayName = "HeroSection"

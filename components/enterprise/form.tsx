@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 const UF_LIST = [
   'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA',
@@ -52,7 +53,6 @@ export function EnterpriseForm() {
     const errs = validate()
     if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setFormState('submitting')
-    // Conectar ao CRM/backend aqui
     await new Promise(r => setTimeout(r, 1200))
     setFormState('success')
   }
@@ -60,13 +60,13 @@ export function EnterpriseForm() {
   if (formState === 'success') {
     return (
       <div className="py-16 text-center">
-        <div className="w-14 h-14 rounded-full bg-[#1a1a1a] border border-white/10 flex items-center justify-center mx-auto mb-6">
-          <svg className="w-7 h-7 text-[#D97757]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="w-14 h-14 rounded-full bg-pale-green border border-hairline flex items-center justify-center mx-auto mb-6">
+          <svg className="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="font-serif text-2xl text-white mb-3">Solicitação recebida.</h3>
-        <p className="text-[#9ca3af] max-w-sm mx-auto text-sm leading-relaxed">
+        <h3 className="type-title-lg text-ink mb-3">Solicitação recebida.</h3>
+        <p className="type-body-sm text-body-muted max-w-sm mx-auto">
           Um especialista Juspilot entrará em contato em até 1 dia útil para agendar a apresentação.
         </p>
       </div>
@@ -108,14 +108,14 @@ export function EnterpriseForm() {
           </select>
         </Field>
       </div>
-      <button
+      <Button
         type="submit"
         disabled={formState === 'submitting'}
-        className="w-full py-4 rounded-xl text-sm font-semibold text-white bg-[#D97757] hover:bg-[#c66747] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+        className="w-full mt-2"
       >
         {formState === 'submitting' ? 'Enviando...' : 'Solicitar apresentação →'}
-      </button>
-      <p className="text-[11px] text-[#6b7280] text-center">
+      </Button>
+      <p className="type-caption text-slate text-center">
         Seus dados são tratados com confidencialidade, em conformidade com a LGPD.
       </p>
     </form>
@@ -125,17 +125,17 @@ export function EnterpriseForm() {
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs text-[#9ca3af] font-medium">{label}</label>
+      <label className="type-caption text-body-muted">{label}</label>
       {children}
-      {error && <span className="text-[10px] text-red-400">{error}</span>}
+      {error && <span className="text-[10px] text-error">{error}</span>}
     </div>
   )
 }
 
 function input(hasError: boolean) {
   return cn(
-    'w-full px-4 py-3 rounded-xl text-sm text-white bg-[#111111] border transition-all duration-200 outline-none placeholder-[#4b5563]',
-    'focus:border-white/30 focus:ring-1 focus:ring-white/10',
-    hasError ? 'border-red-400/50' : 'border-white/10'
+    'w-full px-4 py-3 rounded-md text-sm text-ink bg-canvas border transition-all duration-200 outline-none placeholder:text-muted',
+    'focus:border-brand focus:[box-shadow:var(--shadow-focus-ring)]',
+    hasError ? 'border-error' : 'border-hairline',
   )
 }

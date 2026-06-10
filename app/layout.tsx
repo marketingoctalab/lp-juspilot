@@ -1,11 +1,8 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { sans, display, mono } from "@/lib/fonts"
 import "./globals.css"
-
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 const BASE_URL = "https://lp-juspilot.vercel.app"
 
@@ -90,7 +87,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#0B0C0F",
+  themeColor: "#f7f7f4",
 }
 
 // Schema.org JSON-LD — SoftwareApplication + Organization
@@ -223,14 +220,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className="bg-[#0B0C0F]">
+    <html lang="pt-BR" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased bg-[#0B0C0F]">
+      <body className="font-sans antialiased bg-page text-ink">
         {children}
         <Analytics />
       </body>
