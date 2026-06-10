@@ -27,7 +27,7 @@ export function DarkFeatureBand({
     <section id={id} className="container-page pb-section">
       <div
         className={cn(
-          "rounded-xl px-6 py-16 sm:px-12 sm:py-20 md:px-20 md:py-24",
+          "rounded-xl px-4 py-10 sm:px-8 sm:py-16 md:px-12 md:py-20 lg:px-20 lg:py-24",
           toneClass,
           "text-on-dark",
           className,
@@ -38,7 +38,7 @@ export function DarkFeatureBand({
           <h2 className="type-display-md text-balance">{heading}</h2>
           {body ? <p className="type-body-md text-on-dark-soft max-w-2xl">{body}</p> : null}
         </div>
-        {children ? <div className="mt-12">{children}</div> : null}
+        {children ? <div className="mt-8 sm:mt-12">{children}</div> : null}
       </div>
     </section>
   )

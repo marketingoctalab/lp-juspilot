@@ -12,9 +12,9 @@ interface FooterProps {
 export function Footer({ locale, t }: FooterProps) {
   return (
     <footer className="relative bg-primary text-on-dark-soft">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 pt-20 pb-10">
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-8 pb-12">
-          <div className="col-span-2 md:col-span-4">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 pt-14 sm:pt-20 pb-8 sm:pb-10 safe-bottom">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 sm:gap-10 md:gap-8 pb-10 sm:pb-12">
+          <div className="sm:col-span-2 md:col-span-4">
             <Link href={`/${locale}`} aria-label="Juspilot" className="inline-flex">
               <Logo size="md" variant="light" className="mb-5" />
             </Link>
@@ -84,10 +84,10 @@ export function Footer({ locale, t }: FooterProps) {
         </div>
 
         <div className="pt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-white/10">
-          <p className="type-caption text-on-dark-soft/80">
+          <p className="type-caption text-on-dark-soft/80 text-center md:text-left">
             &copy; {new Date().getFullYear()} Juspilot. {t.copyright}
           </p>
-          <div className="flex items-center gap-6 type-caption">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2 type-caption">
             {t.legal.map((l) => (
               <a
                 key={l.href}

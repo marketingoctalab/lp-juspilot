@@ -17,7 +17,7 @@ export function ComplianceSection({ columns, className }: ComplianceSectionProps
       {columns.map((col) => (
         <div
           key={col.title}
-          className="rounded-xl border border-hairline bg-canvas px-6 py-8 sm:px-8"
+          className="rounded-xl border border-hairline bg-canvas px-4 py-6 sm:px-8 sm:py-8"
         >
           <h3 className="type-title-md text-ink mb-6">{col.title}</h3>
           <ul className="space-y-3">

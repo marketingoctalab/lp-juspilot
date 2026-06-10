@@ -212,24 +212,25 @@ export function ContactModal({
     >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
 
-      <div className="relative w-full sm:max-w-lg max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto bg-canvas border border-hairline rounded-t-2xl sm:rounded-xl shadow-soft-lift safe-bottom">
-        <div className="flex items-start justify-between p-6 pb-4 border-b border-hairline">
-          <div>
-            <h2 id="modal-title" className="type-title-lg text-ink">
+      <div className="relative w-full sm:max-w-lg max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto overscroll-contain bg-canvas border border-hairline rounded-t-2xl sm:rounded-xl shadow-soft-lift safe-bottom">
+        <div className="sticky top-0 z-10 flex items-start justify-between gap-3 p-4 sm:p-6 pb-4 border-b border-hairline bg-canvas/95 backdrop-blur-sm">
+          <div className="min-w-0 pr-2">
+            <h2 id="modal-title" className="type-title-md text-ink text-pretty">
               {t.title}
             </h2>
-            <p className="type-caption text-slate mt-1">{t.subtitle}</p>
+            <p className="type-caption text-slate mt-1 text-pretty">{t.subtitle}</p>
           </div>
           <button
+            type="button"
             onClick={handleClose}
-            className="text-slate hover:text-ink transition-colors ml-4 mt-0.5 shrink-0"
+            className="text-slate hover:text-ink transition-colors shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-soft-stone"
             aria-label={t.close}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {formState === 'success' ? (
             <LeadSuccessPanel
               compact
@@ -351,7 +352,7 @@ function Field({ label, error, children }: { label: string; error?: string; chil
 
 function inputClass(hasError: boolean) {
   return cn(
-    'w-full px-3 py-2.5 rounded-md text-sm text-ink bg-canvas border transition-all duration-200 outline-none placeholder:text-muted',
+    'w-full min-h-[48px] px-3 py-2.5 rounded-md text-base sm:text-sm text-ink bg-canvas border transition-all duration-200 outline-none placeholder:text-muted',
     'focus:border-brand focus:[box-shadow:var(--shadow-focus-ring)]',
     hasError ? 'border-error' : 'border-hairline',
   )

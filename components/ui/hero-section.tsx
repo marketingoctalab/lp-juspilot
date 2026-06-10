@@ -70,15 +70,15 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
         {...props}
       >
         <HeroBackground />
-        <div className="container-page relative pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-36 md:pb-24">
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto px-1">
-            <MonoLabel tone="muted" className="mb-4 sm:mb-6">
+        <div className="container-page relative pt-20 pb-10 sm:pt-28 sm:pb-16 md:pt-36 md:pb-24">
+          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+            <MonoLabel tone="muted" className="mb-3 sm:mb-6 text-center">
               {badge}
             </MonoLabel>
 
-            <h1 className="type-display-xl text-balance text-ink mb-4">
-              {title}{" "}
-              <span className="text-coral inline-block min-h-[1.15em] text-left">
+            <h1 className="type-display-xl text-pretty text-ink mb-3 sm:mb-4 w-full">
+              <span className="block">{title}</span>
+              <span className="text-coral block w-full min-h-[2.4em] sm:min-h-[1.2em] mt-1 sm:mt-0 sm:inline">
                 {displayText}
                 {displayText.length > 0 ? (
                   <span className="animate-pulse opacity-70" aria-hidden>
@@ -88,7 +88,7 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
               </span>
             </h1>
 
-            <p className="type-body-md text-body-muted max-w-2xl mt-4 sm:mt-6 px-1">
+            <p className="type-body-md text-body-muted max-w-2xl mt-3 sm:mt-6 text-pretty px-0.5">
               {subtitle}
             </p>
 

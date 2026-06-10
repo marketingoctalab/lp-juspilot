@@ -32,7 +32,7 @@ export function PlatformShowcase({
           <div
             key={item.title}
             className={cn(
-              "relative flex flex-col gap-4 rounded-xl border p-6 sm:p-8",
+              "relative flex flex-col gap-3 sm:gap-4 rounded-xl border p-5 sm:p-8",
               item.featured
                 ? "border-coral bg-canvas shadow-soft-lift"
                 : "border-hairline bg-canvas",
@@ -41,13 +41,13 @@ export function PlatformShowcase({
             {item.badge ? (
               <MonoLabel
                 tone="coral"
-                className="absolute top-4 right-4 rounded-full border border-coral/30 bg-soft-stone px-2 py-0.5"
+                className="self-start rounded-full border border-coral/30 bg-soft-stone px-2 py-0.5 sm:absolute sm:top-4 sm:right-4 sm:self-auto"
               >
                 {item.badge}
               </MonoLabel>
             ) : null}
             <div>
-              <h3 className="type-title-md text-ink pr-16">{item.title}</h3>
+              <h3 className="type-title-md text-ink sm:pr-16">{item.title}</h3>
               <p className="type-body-sm text-body-muted mt-2">{item.desc}</p>
             </div>
             {item.bullets && item.bullets.length > 0 ? (

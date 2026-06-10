@@ -126,7 +126,7 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
           <ProcessOutputs items={t.processAnalysis.outputs} />
         </section>
 
-        <section className="relative py-10 sm:py-12 border-y border-hairline bg-page overflow-hidden">
+        <section className="relative py-8 sm:py-12 border-y border-hairline bg-page overflow-hidden">
           <MonoLabel tone="muted" className="block text-center mb-6 sm:mb-8 px-4">
             {t.logos.label}
           </MonoLabel>
@@ -258,7 +258,7 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
             className="mb-10 sm:mb-12 mx-auto"
           />
 
-          <div className="max-w-[800px] mx-auto space-y-3">
+          <div className="max-w-[800px] mx-auto space-y-2 sm:space-y-3">
             {t.faq.items.map((faq, i) => (
               <div
                 key={i}

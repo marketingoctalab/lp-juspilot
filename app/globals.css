@@ -184,6 +184,16 @@
     scroll-behavior: smooth;
   }
 
+  [id] {
+    scroll-margin-top: calc(4rem + env(safe-area-inset-top, 0px));
+  }
+
+  @media (min-width: 640px) {
+    [id] {
+      scroll-margin-top: calc(4.5rem + env(safe-area-inset-top, 0px));
+    }
+  }
+
   body {
     background: var(--page);
     color: var(--ink);
@@ -323,21 +333,49 @@
 
   @media (max-width: 768px) {
     .type-display-xl {
-      font-size: clamp(28px, 8.2vw, 40px);
-      line-height: 1.08;
+      font-size: clamp(26px, 7.5vw, 38px);
+      line-height: 1.1;
       letter-spacing: -0.03em;
     }
 
+    .type-display-lg {
+      font-size: clamp(28px, 8vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.028em;
+    }
+
+    .type-display-md {
+      font-size: clamp(22px, 6vw, 30px);
+      line-height: 1.15;
+      letter-spacing: -0.022em;
+    }
+
     .type-display-sm {
-      font-size: clamp(22px, 6vw, 28px);
+      font-size: clamp(20px, 5.5vw, 26px);
+      line-height: 1.2;
+    }
+
+    .type-title-lg {
+      font-size: 20px;
+    }
+
+    .type-mono-label {
+      font-size: 11px;
+      letter-spacing: 0.06em;
     }
 
     .section-y {
-      padding-top: 56px;
-      padding-bottom: 56px;
+      padding-top: 48px;
+      padding-bottom: 48px;
     }
-    .pt-section { padding-top: 56px; }
-    .pb-section { padding-bottom: 56px; }
+    .pt-section { padding-top: 48px; }
+    .pb-section { padding-bottom: 48px; }
+  }
+
+  @media (max-width: 380px) {
+    .type-display-xl {
+      font-size: clamp(24px, 7vw, 32px);
+    }
   }
 
   .container-page {

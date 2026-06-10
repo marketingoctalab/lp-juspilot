@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/logo';
 import { LanguageSwitcher } from '@/components/language-switcher';
@@ -18,12 +18,19 @@ interface HeaderProps {
   onMobileCtaClick?: () => void
 }
 
-const DEFAULT_NAV = [
+const EXTERNAL_NAV = [
   { key: 'platform' as const, href: 'https://juspilot.ai/plataforma' },
   { key: 'products' as const, href: 'https://juspilot.ai/produtos' },
   { key: 'pricing' as const, href: 'https://juspilot.ai/pricing' },
   { key: 'blog' as const, href: 'https://juspilot.ai/blog' },
 ];
+
+const PAGE_SECTIONS = [
+  { key: 'analysis' as const, href: '#analise' },
+  { key: 'jurimetria' as const, href: '#jurimetria' },
+  { key: 'platform' as const, href: '#plataforma' },
+  { key: 'faq' as const, href: '#faq' },
+] as const;
 
 export function Header({ locale = 'pt', t, onCtaClick, onMobileCtaClick }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,8 +42,20 @@ export function Header({ locale = 'pt', t, onCtaClick, onMobileCtaClick }: Heade
     pricing: 'Planos',
     blog: 'Blog',
     cta: 'Testar grátis',
+    ctaShort: 'Testar',
     switchLang: locale === 'pt' ? 'English' : 'Português',
+    menuTitle: 'Menu',
+    onPage: 'Nesta página',
+    external: 'Juspilot',
+    sections: {
+      analysis: 'Análise de processos',
+      jurimetria: 'Jurimetria',
+      platform: 'Plataforma',
+      faq: 'Dúvidas',
+    },
   };
+
+  const closeMenu = useCallback(() => setMobileMenuOpen(false), []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 16);
@@ -50,8 +69,22 @@ export function Header({ locale = 'pt', t, onCtaClick, onMobileCtaClick }: Heade
     return () => { document.body.style.overflow = ''; };
   }, [mobileMenuOpen]);
 
-  const navigation = DEFAULT_NAV.map((item) => ({
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [mobileMenuOpen, closeMenu]);
+
+  const externalNav = EXTERNAL_NAV.map((item) => ({
     name: navLabels[item.key],
+    href: item.href,
+  }));
+
+  const sectionNav = PAGE_SECTIONS.map((item) => ({
+    name: navLabels.sections[item.key],
     href: item.href,
   }));
 
@@ -60,8 +93,23 @@ export function Header({ locale = 'pt', t, onCtaClick, onMobileCtaClick }: Heade
   }
 
   function handleMobileCta() {
-    setMobileMenuOpen(false);
+    closeMenu();
     (onMobileCtaClick ?? onCtaClick)?.();
+  }
+
+  function handleSectionLink(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    if (!href.startsWith('#')) {
+      closeMenu();
+      return;
+    }
+    e.preventDefault();
+    closeMenu();
+    const target = document.querySelector(href);
+    if (target) {
+      const headerOffset = 72;
+      const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
   }
 
   return (
@@ -69,36 +117,37 @@ export function Header({ locale = 'pt', t, onCtaClick, onMobileCtaClick }: Heade
       className={cn(
         'fixed top-0 inset-x-0 z-50 transition-[background,border-color,backdrop-filter] duration-200 safe-top',
         isScrolled || mobileMenuOpen
-          ? 'bg-page/90 backdrop-blur-md border-b border-hairline'
-          : 'bg-page/80 backdrop-blur-sm border-b border-transparent',
+          ? 'bg-page/95 backdrop-blur-md border-b border-hairline'
+          : 'bg-page/85 backdrop-blur-sm border-b border-transparent',
       )}
     >
-      <nav className="mx-auto flex h-14 sm:h-16 max-w-[1200px] items-center justify-between px-4 sm:px-6 md:px-8">
-        <div className="flex items-center gap-6 sm:gap-10 min-w-0">
-          <Link href={`/${locale}`} aria-label="Juspilot" className="flex items-center shrink-0">
-            <Logo size="sm" variant="dark" />
-          </Link>
+      <nav
+        className="mx-auto flex h-14 sm:h-16 max-w-[1200px] items-center justify-between gap-3 px-4 sm:px-6 md:px-8"
+        aria-label="Principal"
+      >
+        <Link href={`/${locale}`} aria-label="Juspilot" className="flex items-center shrink-0 min-w-0">
+          <Logo size="sm" variant="dark" />
+        </Link>
 
-          <div className="hidden lg:flex items-center gap-7">
-            {navigation.map((item) => {
-              const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    'type-nav-link transition-colors',
-                    active ? 'text-ink' : 'text-body-muted hover:text-ink',
-                  )}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
+        <div className="hidden lg:flex items-center gap-7">
+          {externalNav.map((item) => {
+            const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  'type-nav-link transition-colors whitespace-nowrap',
+                  active ? 'text-ink' : 'text-body-muted hover:text-ink',
+                )}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3 shrink-0">
           <LanguageSwitcher
             currentLocale={locale}
             label={navLabels.switchLang ?? (locale === 'pt' ? 'English' : 'Português')}
@@ -109,15 +158,26 @@ export function Header({ locale = 'pt', t, onCtaClick, onMobileCtaClick }: Heade
           </Button>
         </div>
 
-        <button
-          type="button"
-          aria-label="Menu"
-          aria-expanded={mobileMenuOpen}
-          className="lg:hidden p-2.5 -mr-1 text-body-muted hover:text-ink min-h-[44px] min-w-[44px] flex items-center justify-center"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex lg:hidden items-center gap-2 shrink-0">
+          <Button
+            size="sm"
+            onClick={handleMobileCta}
+            className="min-h-[40px] px-3 text-xs sm:text-sm sm:px-4"
+          >
+            <span className="sm:hidden">{navLabels.ctaShort}</span>
+            <span className="hidden sm:inline">{navLabels.cta}</span>
+          </Button>
+          <button
+            type="button"
+            aria-label={mobileMenuOpen ? 'Fechar menu' : navLabels.menuTitle}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            className="p-2.5 text-body-muted hover:text-ink min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-soft-stone/80"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -129,35 +189,59 @@ export function Header({ locale = 'pt', t, onCtaClick, onMobileCtaClick }: Heade
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="lg:hidden fixed inset-0 top-14 sm:top-16 bg-black/30 z-40"
-              onClick={() => setMobileMenuOpen(false)}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px]"
+              onClick={closeMenu}
             />
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label={navLabels.menuTitle}
+              initial={{ opacity: 0, y: '100%' }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 16 }}
-              transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-              className="lg:hidden fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border-t border-hairline bg-canvas shadow-soft-lift safe-bottom"
+              exit={{ opacity: 0, y: '100%' }}
+              transition={{ type: 'spring', damping: 32, stiffness: 380 }}
+              className="lg:hidden fixed inset-x-0 bottom-0 z-[70] max-h-[min(520px,88dvh)] overflow-y-auto overscroll-contain rounded-t-2xl border-t border-hairline bg-canvas shadow-soft-lift safe-bottom"
             >
               <div className="mx-auto max-w-lg px-4 pt-3 pb-6">
-                <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-hairline" />
-                <div className="space-y-1">
-                  {navigation.map((item) => (
+                <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-hairline" />
+
+                <p className="type-caption text-slate px-3 mb-2">{navLabels.onPage}</p>
+                <div className="space-y-0.5 mb-4">
+                  {sectionNav.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="flex items-center min-h-[48px] px-3 rounded-lg type-nav-link text-ink hover:bg-soft-stone/60 active:bg-soft-stone"
+                      onClick={(e) => handleSectionLink(e, item.href)}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+
+                <p className="type-caption text-slate px-3 mb-2 pt-2 border-t border-hairline">
+                  {navLabels.external}
+                </p>
+                <div className="space-y-0.5">
+                  {externalNav.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
                       className="flex items-center min-h-[48px] px-3 rounded-lg type-nav-link text-ink hover:bg-soft-stone/60 active:bg-soft-stone"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={closeMenu}
                     >
                       {item.name}
                     </Link>
                   ))}
                 </div>
-                <div className="pt-4 mt-2 border-t border-hairline flex flex-col gap-2">
+
+                <div className="pt-4 mt-4 border-t border-hairline flex flex-col gap-2">
                   <LanguageSwitcher
                     currentLocale={locale}
                     label={navLabels.switchLang ?? (locale === 'pt' ? 'English' : 'Português')}
-                    className="w-full text-center min-h-[48px] flex items-center justify-center rounded-lg type-nav-link text-body-muted hover:bg-soft-stone/60 transition-colors"
+                    className="w-full text-center min-h-[48px] flex items-center justify-center rounded-lg type-nav-link text-body-muted hover:bg-soft-stone/60 active:bg-soft-stone transition-colors"
                   />
                   <Button className="w-full min-h-[48px] text-base" onClick={handleMobileCta}>
                     {navLabels.cta}

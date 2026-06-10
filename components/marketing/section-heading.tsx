@@ -27,7 +27,7 @@ export function SectionHeading({
   const bodyToneClass = tone === "on-dark" ? "text-on-dark-soft" : "text-body-muted"
 
   return (
-    <div className={cn("flex flex-col gap-5 max-w-2xl", alignment, className)}>
+    <div className={cn("flex flex-col gap-3 sm:gap-5 max-w-2xl", alignment, className)}>
       {eyebrow ? (
         <MonoLabel tone={tone === "on-dark" ? "on-dark" : "muted"}>{eyebrow}</MonoLabel>
       ) : null}

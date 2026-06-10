@@ -12,7 +12,17 @@ export const en: Translations = {
     pricing: "Pricing",
     blog: "Blog",
     cta: "Try free",
+    ctaShort: "Try",
     switchLang: "Português",
+    menuTitle: "Menu",
+    onPage: "On this page",
+    external: "Juspilot",
+    sections: {
+      analysis: "Case analysis",
+      jurimetria: "Jurimetrics",
+      platform: "Platform",
+      faq: "FAQ",
+    },
   },
   hero: {
     badge: "Legal production infrastructure",

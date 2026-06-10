@@ -10,7 +10,17 @@ export const pt = {
     pricing: "Planos",
     blog: "Blog",
     cta: "Testar grátis",
+    ctaShort: "Testar",
     switchLang: "English",
+    menuTitle: "Menu",
+    onPage: "Nesta página",
+    external: "Juspilot",
+    sections: {
+      analysis: "Análise de processos",
+      jurimetria: "Jurimetria",
+      platform: "Plataforma",
+      faq: "Dúvidas",
+    },
   },
   hero: {
     badge: "Infraestrutura de produção jurídica",

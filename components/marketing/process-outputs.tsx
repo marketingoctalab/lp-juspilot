@@ -16,7 +16,7 @@ export function ProcessOutputs({ items, className }: ProcessOutputsProps) {
       {items.map((item, index) => (
         <div
           key={item.title}
-          className="rounded-xl border border-hairline bg-canvas p-6 sm:p-8 flex flex-col gap-3"
+          className="rounded-xl border border-hairline bg-canvas p-5 sm:p-8 flex flex-col gap-2.5 sm:gap-3"
         >
           <span className="type-caption text-coral font-mono">0{index + 1}</span>
           <h3 className="type-title-md text-ink">{item.title}</h3>

@@ -35,7 +35,7 @@ export function CtaBand({
     <section className="container-page pb-section">
       <div
         className={cn(
-          "flex flex-col items-center gap-5 sm:gap-6 rounded-xl px-5 py-10 sm:px-12 sm:py-16 text-center",
+          "flex flex-col items-center gap-4 sm:gap-6 rounded-xl px-4 py-8 sm:px-12 sm:py-16 text-center",
           isDark ? "bg-primary text-on-dark" : "bg-soft-stone text-ink",
           className,
         )}
