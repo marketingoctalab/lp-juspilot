@@ -3,8 +3,10 @@
 import { useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { LeadSuccessPanel } from '@/components/lead-success-panel'
 import { trackLead } from '@/components/analytics/pixel-events'
 import { trackFormStart, trackFormSubmit } from '@/lib/analytics'
+import { submitLead } from '@/lib/leads'
 
 const UF_LIST = [
   'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA',
@@ -17,6 +19,7 @@ type FormState = 'idle' | 'submitting' | 'success' | 'error'
 export function EnterpriseForm() {
   const formStartedRef = useRef(false)
   const [formState, setFormState] = useState<FormState>('idle')
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [form, setForm] = useState({
     nome: '', email: '', telefone: '', cargo: '', empresa: '', uf: '',
   })
@@ -64,29 +67,43 @@ export function EnterpriseForm() {
     const errs = validate()
     if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setFormState('submitting')
-    await new Promise(r => setTimeout(r, 1200))
-    trackFormSubmit({
-      form_name: 'enterprise_lead',
-      form_destination: 'enterprise_sales',
-      form_location: 'enterprise_page',
-    })
-    trackLead('enterprise_form')
-    setFormState('success')
+    setSubmitError(null)
+
+    try {
+      await submitLead({
+        nome: form.nome,
+        email: form.email,
+        telefone: form.telefone,
+        cargo: form.cargo,
+        empresa: form.empresa,
+        uf: form.uf,
+        locale: 'pt',
+        form_name: 'enterprise_lead',
+        lead_source: 'enterprise_form',
+      })
+      trackFormSubmit({
+        form_name: 'enterprise_lead',
+        form_destination: 'supabase',
+        form_location: 'enterprise_page',
+      })
+      trackLead('enterprise_form')
+      setFormState('success')
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : 'Não foi possível enviar o formulário.',
+      )
+      setFormState('error')
+    }
   }
 
   if (formState === 'success') {
     return (
-      <div className="py-16 text-center">
-        <div className="w-14 h-14 rounded-full bg-pale-green border border-hairline flex items-center justify-center mx-auto mb-6">
-          <svg className="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h3 className="type-title-lg text-ink mb-3">Solicitação recebida.</h3>
-        <p className="type-body-sm text-body-muted max-w-sm mx-auto">
-          Um especialista Juspilot entrará em contato em até 1 dia útil para agendar a apresentação.
-        </p>
-      </div>
+      <LeadSuccessPanel
+        title="Solicitação recebida."
+        body="Escolha como prefere continuar: agende uma demonstração com nosso time ou acesse a plataforma agora."
+        demoLabel="Agendar demonstração no WhatsApp"
+        loginLabel="Fazer login e testar agora"
+      />
     )
   }
 
@@ -125,6 +142,9 @@ export function EnterpriseForm() {
           </select>
         </Field>
       </div>
+      {submitError ? (
+        <p className="type-caption text-error text-center">{submitError}</p>
+      ) : null}
       <Button
         type="submit"
         disabled={formState === 'submitting'}

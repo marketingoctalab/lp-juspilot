@@ -205,7 +205,9 @@ export const en: Translations = {
     close: "Close",
     success: {
       title: "We received your request.",
-      body: "A Juspilot specialist will contact you within 1 business day to enable your trial.",
+      body: "Choose how you'd like to continue: book a full demo with our team or access the platform now.",
+      demoCta: "Book a demo on WhatsApp",
+      loginCta: "Log in and start your trial",
       close: "Close",
     },
     fields: {

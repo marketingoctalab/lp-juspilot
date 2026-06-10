@@ -203,7 +203,9 @@ export const pt = {
     close: "Fechar",
     success: {
       title: "Recebemos sua solicitação.",
-      body: "Um especialista Juspilot entrará em contato em até 1 dia útil para liberar seu teste.",
+      body: "Escolha como prefere continuar: agende uma demonstração com nosso time ou acesse a plataforma agora.",
+      demoCta: "Agendar demonstração no WhatsApp",
+      loginCta: "Fazer login e testar agora",
       close: "Fechar",
     },
     fields: {

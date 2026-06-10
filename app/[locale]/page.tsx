@@ -18,7 +18,6 @@ import type { Locale } from "@/lib/i18n"
 import { notFound } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { LpPageTracker } from "@/components/analytics/lp-page-tracker"
-import { trackLead } from "@/components/analytics/pixel-events"
 import { trackCTAClick } from "@/lib/analytics"
 
 const PILLAR_ICONS = [ScrollText, Database, Users]
@@ -40,10 +39,11 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
+  const [leadSource, setLeadSource] = useState("hero")
   const observerRef = useRef<IntersectionObserver>(null)
 
   const openContact = useCallback((source: string, ctaName?: string) => {
-    trackLead(source)
+    setLeadSource(source)
     trackCTAClick({
       cta_name: ctaName ?? source,
       cta_location: source,
@@ -82,6 +82,7 @@ export default function LocalePage({ params }: { params: Promise<{ locale: strin
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         locale={locale as Locale}
+        leadSource={leadSource}
         t={t.modal}
       />
       <Header

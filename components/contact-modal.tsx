@@ -3,9 +3,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { trackLead } from '@/components/analytics/pixel-events'
 import { trackFormStart, trackFormSubmit } from '@/lib/analytics'
+import { submitLead } from '@/lib/leads'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { LeadSuccessPanel } from '@/components/lead-success-panel'
 import type { Locale, Translations } from '@/lib/i18n'
 
 const CARGO_LIST = [
@@ -38,6 +40,7 @@ interface ContactModalProps {
   open: boolean
   onClose: () => void
   locale?: Locale
+  leadSource?: string
   t?: Translations['modal']
 }
 
@@ -49,7 +52,9 @@ const DEFAULT_T: Translations['modal'] = {
   close: 'Fechar',
   success: {
     title: 'Recebemos sua solicitação.',
-    body: 'Um especialista Juspilot entrará em contato em até 1 dia útil para agendar a conversa.',
+    body: 'Escolha como prefere continuar: agende uma demonstração com nosso time ou acesse a plataforma agora.',
+    demoCta: 'Agendar demonstração no WhatsApp',
+    loginCta: 'Fazer login e testar agora',
     close: 'Fechar',
   },
   fields: {
@@ -71,9 +76,16 @@ const DEFAULT_T: Translations['modal'] = {
   lgpd: 'Seus dados são tratados com confidencialidade, em conformidade com a LGPD.',
 }
 
-export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: ContactModalProps) {
+export function ContactModal({
+  open,
+  onClose,
+  locale = 'pt',
+  leadSource = 'contact_modal',
+  t = DEFAULT_T,
+}: ContactModalProps) {
   const formStartedRef = useRef(false)
   const [formState, setFormState] = useState<FormState>('idle')
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [form, setForm] = useState({
     nome: '',
     email: '',
@@ -149,14 +161,33 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
       return
     }
     setFormState('submitting')
-    await new Promise(r => setTimeout(r, 1200))
-    trackFormSubmit({
-      form_name: 'contact_modal',
-      form_destination: 'enterprise_sales',
-      form_location: 'contact_modal',
-    })
-    trackLead('contact_modal')
-    setFormState('success')
+    setSubmitError(null)
+
+    try {
+      await submitLead({
+        nome: form.nome,
+        email: form.email,
+        telefone: form.telefone,
+        cargo: form.cargo,
+        empresa: form.empresa,
+        uf: form.uf,
+        locale,
+        form_name: 'contact_modal',
+        lead_source: leadSource,
+      })
+      trackFormSubmit({
+        form_name: 'contact_modal',
+        form_destination: 'supabase',
+        form_location: leadSource,
+      })
+      trackLead(leadSource)
+      setFormState('success')
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : 'Não foi possível enviar o formulário.',
+      )
+      setFormState('error')
+    }
   }
 
   function handleClose() {
@@ -164,6 +195,7 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
     setTimeout(() => {
       setFormState('idle')
       formStartedRef.current = false
+      setSubmitError(null)
       setForm({ nome: '', email: '', telefone: '', cargo: '', empresa: '', uf: '' })
       setErrors({})
     }, 300)
@@ -199,21 +231,15 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
 
         <div className="p-6">
           {formState === 'success' ? (
-            <div className="py-8 text-center">
-              <div className="w-12 h-12 rounded-full bg-pale-green border border-hairline flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h3 className="type-title-md text-ink mb-2">{t.success.title}</h3>
-              <p className="type-body-sm text-body-muted max-w-xs mx-auto">{t.success.body}</p>
-              <button
-                onClick={handleClose}
-                className="mt-6 type-caption text-slate underline underline-offset-4 hover:text-ink transition-colors"
-              >
-                {t.success.close}
-              </button>
-            </div>
+            <LeadSuccessPanel
+              compact
+              title={t.success.title}
+              body={t.success.body}
+              demoLabel={t.success.demoCta}
+              loginLabel={t.success.loginCta}
+              closeLabel={t.success.close}
+              onClose={handleClose}
+            />
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -293,6 +319,9 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
                 </Field>
               </div>
 
+              {submitError ? (
+                <p className="type-caption text-error text-center">{submitError}</p>
+              ) : null}
               <Button
                 type="submit"
                 disabled={formState === 'submitting'}
