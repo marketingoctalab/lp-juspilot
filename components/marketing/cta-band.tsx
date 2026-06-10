@@ -1,15 +1,19 @@
+"use client"
+
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { trackInitiateCheckout } from "@/components/analytics/pixel-events"
+import { trackCTAClick } from "@/lib/analytics"
 
 interface CtaBandProps {
   eyebrow?: string
   heading: string
   subline?: string
   primaryLabel: string
-  secondaryLabel?: string
   onPrimaryClick?: () => void
-  onSecondaryClick?: () => void
+  secondaryLabel?: string
+  secondaryHref?: string
   tone?: "light" | "dark"
   className?: string
 }
@@ -19,9 +23,9 @@ export function CtaBand({
   heading,
   subline,
   primaryLabel,
-  secondaryLabel,
   onPrimaryClick,
-  onSecondaryClick,
+  secondaryLabel,
+  secondaryHref,
   tone = "light",
   className,
 }: CtaBandProps) {
@@ -31,7 +35,7 @@ export function CtaBand({
     <section className="container-page pb-section">
       <div
         className={cn(
-          "flex flex-col items-center gap-6 rounded-xl px-6 py-12 sm:px-12 sm:py-16 text-center",
+          "flex flex-col items-center gap-5 sm:gap-6 rounded-xl px-5 py-10 sm:px-12 sm:py-16 text-center",
           isDark ? "bg-primary text-on-dark" : "bg-soft-stone text-ink",
           className,
         )}
@@ -47,23 +51,38 @@ export function CtaBand({
             {subline}
           </p>
         ) : null}
-        <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-1 sm:mt-2 flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center justify-center gap-3 max-w-sm sm:max-w-none">
           <Button
-            variant={isDark ? "secondary" : "default"}
             size="lg"
-            className={isDark ? "bg-canvas text-ink border-transparent hover:bg-canvas/90" : ""}
+            variant={isDark ? "secondary" : "default"}
+            className={cn(
+              "w-full sm:w-auto min-h-[48px] text-base",
+              isDark ? "bg-canvas text-ink border-transparent hover:bg-canvas/90" : "",
+            )}
             onClick={onPrimaryClick}
           >
             {primaryLabel}
           </Button>
-          {secondaryLabel ? (
+          {secondaryLabel && secondaryHref ? (
             <Button
-              variant="ghost"
+              asChild
               size="lg"
-              className={isDark ? "text-on-dark hover:bg-white/10" : ""}
-              onClick={onSecondaryClick}
+              variant="ghost"
+              className={cn("w-full sm:w-auto min-h-[48px]", isDark ? "text-on-dark hover:bg-white/10" : "")}
             >
-              {secondaryLabel}
+              <a
+                href={secondaryHref}
+                onClick={() => {
+                  trackInitiateCheckout("pricing")
+                  trackCTAClick({
+                    cta_name: "cta_section_pricing",
+                    cta_location: "cta_section",
+                    cta_href: secondaryHref,
+                  })
+                }}
+              >
+                {secondaryLabel}
+              </a>
             </Button>
           ) : null}
         </div>

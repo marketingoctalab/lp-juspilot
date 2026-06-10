@@ -19,7 +19,21 @@ export interface HeroSectionProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
-  ({ className, badge, title, animatedTexts, subtitle, ctaButtonText, socialProofText, avatars, onCtaClick, ...props }, ref) => {
+  (
+    {
+      className,
+      badge,
+      title,
+      animatedTexts,
+      subtitle,
+      ctaButtonText,
+      socialProofText,
+      avatars,
+      onCtaClick,
+      ...props
+    },
+    ref,
+  ) => {
     const [textIndex, setTextIndex] = React.useState(0)
     const [displayText, setDisplayText] = React.useState("")
     const [isDeleting, setIsDeleting] = React.useState(false)
@@ -35,7 +49,7 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
         }
       }
 
-      const typingSpeed = isDeleting ? 60 : 120
+      const typingSpeed = isDeleting ? 50 : 90
       const typeInterval = setInterval(handleTyping, typingSpeed)
 
       if (!isDeleting && displayText === fullText) {
@@ -51,20 +65,17 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
     return (
       <section
         ref={ref}
-        className={cn(
-          "hero-section relative overflow-hidden",
-          className,
-        )}
+        className={cn("hero-section relative overflow-hidden", className)}
         {...props}
       >
         <HeroBackground />
-        <div className="container-page relative pt-28 pb-16 md:pt-36 md:pb-24">
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-            <MonoLabel tone="muted" className="mb-6">
+        <div className="container-page relative pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-36 md:pb-24">
+          <div className="flex flex-col items-center text-center max-w-4xl mx-auto px-1">
+            <MonoLabel tone="muted" className="mb-4 sm:mb-6">
               {badge}
             </MonoLabel>
 
-            <h1 className="type-display-xl text-balance text-[clamp(36px,5.6vw,72px)] leading-[1.04] tracking-[-0.035em] text-ink mb-4">
+            <h1 className="type-display-xl text-balance text-ink mb-4">
               {title}{" "}
               <span className="text-coral">
                 {displayText}
@@ -72,16 +83,20 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
               </span>
             </h1>
 
-            <p className="type-body-md text-body-muted max-w-2xl mt-6">
+            <p className="type-body-md text-body-muted max-w-2xl mt-4 sm:mt-6 px-1">
               {subtitle}
             </p>
 
-            <div className="mt-10 flex flex-col items-center gap-6">
-              <Button size="lg" onClick={onCtaClick}>
+            <div className="mt-8 sm:mt-10 flex flex-col items-center gap-5 sm:gap-6 w-full max-w-sm sm:max-w-none">
+              <Button
+                size="lg"
+                onClick={onCtaClick}
+                className="w-full sm:w-auto min-h-[48px] text-base"
+              >
                 {ctaButtonText}
               </Button>
 
-              <div className="flex items-center justify-center gap-3">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <div className="flex -space-x-2">
                   {avatars.map((avatar, i) => (
                     <Avatar key={i} className="w-8 h-8 border-2 border-page">
@@ -92,7 +107,7 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
                     </Avatar>
                   ))}
                 </div>
-                <p className="type-caption text-slate">{socialProofText}</p>
+                <p className="type-caption text-slate text-center sm:text-left">{socialProofText}</p>
               </div>
             </div>
           </div>

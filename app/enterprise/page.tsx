@@ -8,6 +8,8 @@ import { MonoLabel } from "@/components/ui/mono-label"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/ui/logo"
 import { HeroBackground } from "@/components/marketing/hero-background"
+import { LpPageTracker } from "@/components/analytics/lp-page-tracker"
+import { trackCTAClick } from "@/lib/analytics"
 
 const LOGOS = [
   "Empresa A", "Empresa B", "Empresa C",
@@ -22,7 +24,7 @@ const TESTIMONIALS = [
     company: "Grupo Industrial Brasileiro",
   },
   {
-    quote: "A segurança e a conformidade com LGPD foram determinantes na nossa decisão. Não abrimos mão de soberania de dados — e o Juspilot entende isso.",
+    quote: "A segurança e a conformidade com LGPD foram determinantes na nossa decisão. Não abrimos mão de soberania de dados, e o Juspilot entende isso.",
     name: "Fernanda Lopes",
     role: "Diretora Jurídica",
     company: "Holding Financeira Nacional",
@@ -38,7 +40,7 @@ const TESTIMONIALS = [
 const FEATURES = [
   {
     title: "Contencioso em escala",
-    desc: "Gestão de portfólio jurídico com centenas de casos simultâneos. Kanban por fases, SLA automático, risk assessment e alertas de prazo — visibilidade total para o GC.",
+    desc: "Gestão de portfólio jurídico com centenas de casos simultâneos. Kanban por fases, SLA automático, risk assessment e alertas de prazo com visibilidade total para o GC.",
   },
   {
     title: "Contratos sem gargalo",
@@ -46,11 +48,11 @@ const FEATURES = [
   },
   {
     title: "Inteligência de jurisprudência",
-    desc: "Monitoramento contínuo de STJ, STF e TST. Alertas automáticos quando precedentes relevantes mudam — para que sua estratégia nunca seja surpreendida.",
+    desc: "Monitoramento contínuo de STJ, STF e TST. Alertas automáticos quando precedentes relevantes mudam, para que sua estratégia nunca seja surpreendida.",
   },
   {
     title: "Automação de processos",
-    desc: "Workflows configuráveis para os processos mais críticos. Aprovações, notificações, escalações e integrações — sem depender de TI para cada mudança.",
+    desc: "Workflows configuráveis para os processos mais críticos. Aprovações, notificações, escalações e integrações, sem depender de TI para cada mudança.",
   },
   {
     title: "Segurança institucional",
@@ -64,11 +66,16 @@ const FEATURES = [
 
 export default function EnterprisePage() {
   function scrollToForm() {
+    trackCTAClick({
+      cta_name: "enterprise_hero_form",
+      cta_location: "enterprise_hero",
+    })
     document.getElementById("formulario")?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
     <div className="bg-page text-ink min-h-screen">
+      <LpPageTracker contentName="lp_enterprise" />
       <EnterpriseNavbar />
 
       <main className="pt-16">
@@ -83,7 +90,7 @@ export default function EnterprisePage() {
               Os departamentos jurídicos que operam em escala escolhem o Juspilot.
             </h1>
             <p className="type-body-md text-body-muted max-w-[560px] mx-auto mb-10">
-              Agentes de IA para contencioso, contratos e inteligência jurídica —
+              Agentes de IA para contencioso, contratos e inteligência jurídica,
               com dados em soberania nacional e segurança de nível institucional.
             </p>
             <Button size="lg" onClick={scrollToForm}>
@@ -190,7 +197,6 @@ export default function EnterprisePage() {
               <p className="type-body-sm text-on-dark-soft max-w-[280px] mb-6">
                 O cockpit jurídico com IA. Casos, contratos, minutas e jurisprudência em uma única plataforma.
               </p>
-              <MonoLabel tone="on-dark">Disponível no Brasil</MonoLabel>
             </div>
 
             {[

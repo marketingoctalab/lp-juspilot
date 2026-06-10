@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { trackLead } from '@/components/analytics/pixel-events'
+import { trackFormStart, trackFormSubmit } from '@/lib/analytics'
 
 const UF_LIST = [
   'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA',
@@ -13,6 +15,7 @@ const UF_LIST = [
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
 
 export function EnterpriseForm() {
+  const formStartedRef = useRef(false)
   const [formState, setFormState] = useState<FormState>('idle')
   const [form, setForm] = useState({
     nome: '', email: '', telefone: '', cargo: '', empresa: '', uf: '',
@@ -30,7 +33,14 @@ export function EnterpriseForm() {
     return e
   }
 
+  function markFormStart() {
+    if (formStartedRef.current) return
+    formStartedRef.current = true
+    trackFormStart({ form_name: 'enterprise_lead', form_location: 'enterprise_page' })
+  }
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    markFormStart()
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
     if (errors[name as keyof typeof form]) setErrors(prev => ({ ...prev, [name]: undefined }))
@@ -44,6 +54,7 @@ export function EnterpriseForm() {
   }
 
   function handlePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    markFormStart()
     setForm(prev => ({ ...prev, telefone: formatPhone(e.target.value) }))
     if (errors.telefone) setErrors(prev => ({ ...prev, telefone: undefined }))
   }
@@ -54,6 +65,12 @@ export function EnterpriseForm() {
     if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setFormState('submitting')
     await new Promise(r => setTimeout(r, 1200))
+    trackFormSubmit({
+      form_name: 'enterprise_lead',
+      form_destination: 'enterprise_sales',
+      form_location: 'enterprise_page',
+    })
+    trackLead('enterprise_form')
     setFormState('success')
   }
 

@@ -1,19 +1,25 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Analytics } from "@vercel/analytics/next"
+import {
+  GoogleTagManager,
+  GoogleTagManagerNoScript,
+  ConsentModeDefaults,
+  ConsentBanner,
+} from "@/components/analytics"
 import { sans, display, mono } from "@/lib/fonts"
 import "./globals.css"
 
-const BASE_URL = "https://lp-juspilot.vercel.app"
+const BASE_URL = "https://lp.juspilot.ai"
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Juspilot — Agentes de IA para seu Jurídico",
+    default: "Juspilot: a plataforma de IA para o trabalho jurídico brasileiro",
     template: "%s | Juspilot",
   },
   description:
-    "Juspilot é a plataforma de IA jurídica brasileira. Gestão de casos, minutas com IA, jurisprudência de STJ, STF e TST, contratos e workflows em um só lugar. Conformidade LGPD nativa.",
+    "Pesquisa em STJ, STF, TCU, CARF e TJs com citação vinculada. Minutas, contratos, extração estruturada e workspace colaborativo em um cockpit único. Teste 7 dias grátis.",
   keywords: [
     "plataforma jurídica IA",
     "inteligência artificial jurídica",
@@ -42,21 +48,21 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: BASE_URL,
     siteName: "Juspilot",
-    title: "Juspilot — Agentes de IA para seu Jurídico",
+    title: "Juspilot: a plataforma de IA para o trabalho jurídico brasileiro",
     description:
-      "A plataforma jurídica brasileira com IA. Casos, minutas, contratos, jurisprudência e workflows em um único cockpit. Conformidade LGPD nativa.",
+      "Pesquisa em STJ, STF, TCU, CARF e TJs com citação vinculada. Minutas, contratos e workspace colaborativo em um cockpit único. Teste 7 dias grátis.",
     images: [
       {
         url: "/screenshots/hero.png",
         width: 1200,
         height: 630,
-        alt: "Juspilot — Plataforma de IA Jurídica",
+        alt: "Juspilot: plataforma de IA jurídica",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Juspilot — Agentes de IA para seu Jurídico",
+    title: "Juspilot: agentes de IA para seu jurídico",
     description:
       "A plataforma jurídica brasileira com IA. Casos, minutas, contratos, jurisprudência e workflows em um único lugar.",
     images: ["/screenshots/hero.png"],
@@ -77,6 +83,9 @@ export const metadata: Metadata = {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     apple: "/apple-icon.png",
   },
+  other: {
+    "facebook-domain-verification": "0Oo169782sb7eb0ijlpc8mnwoixari",
+  },
   verification: {
     // google: "SEU_CÓDIGO_GOOGLE_SEARCH_CONSOLE", // TODO: adicionar após verificar no GSC
   },
@@ -87,6 +96,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  viewportFit: "cover",
   themeColor: "#f7f7f4",
 }
 
@@ -107,7 +117,7 @@ const jsonLd = {
         "@type": "Offer",
         price: "0",
         priceCurrency: "BRL",
-        description: "Teste grátis de 14 dias",
+        description: "Teste grátis de 7 dias",
       },
       featureList: [
         "Gestão de casos jurídicos com Kanban",
@@ -148,7 +158,7 @@ const jsonLd = {
       "@type": "WebPage",
       "@id": `${BASE_URL}/#webpage`,
       url: BASE_URL,
-      name: "Juspilot — Agentes de IA para seu Jurídico",
+      name: "Juspilot: agentes de IA para seu jurídico",
       description:
         "Plataforma jurídica com IA para gestão de casos, minutas, contratos, jurisprudência e automação. Conformidade LGPD. Para escritórios e departamentos jurídicos.",
       isPartOf: { "@id": `${BASE_URL}/#website` },
@@ -222,12 +232,20 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
       <head>
+        <link rel="preconnect" href="https://app.juspilot.ai" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.facebook.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <ConsentModeDefaults />
       </head>
       <body className="font-sans antialiased bg-page text-ink">
+        <GoogleTagManager />
+        <GoogleTagManagerNoScript />
+        <ConsentBanner />
         {children}
         <Analytics />
       </body>

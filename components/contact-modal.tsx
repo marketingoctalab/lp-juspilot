@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { trackLead } from '@/components/analytics/pixel-events'
+import { trackFormStart, trackFormSubmit } from '@/lib/analytics'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -70,6 +72,7 @@ const DEFAULT_T: Translations['modal'] = {
 }
 
 export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: ContactModalProps) {
+  const formStartedRef = useRef(false)
   const [formState, setFormState] = useState<FormState>('idle')
   const [form, setForm] = useState({
     nome: '',
@@ -109,7 +112,14 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
     return e
   }
 
+  function markFormStart() {
+    if (formStartedRef.current) return
+    formStartedRef.current = true
+    trackFormStart({ form_name: 'contact_modal', form_location: 'contact_modal' })
+  }
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    markFormStart()
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
     if (errors[name as keyof typeof form]) {
@@ -126,6 +136,7 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
   }
 
   function handlePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    markFormStart()
     setForm(prev => ({ ...prev, telefone: formatPhone(e.target.value) }))
     if (errors.telefone) setErrors(prev => ({ ...prev, telefone: undefined }))
   }
@@ -139,6 +150,12 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
     }
     setFormState('submitting')
     await new Promise(r => setTimeout(r, 1200))
+    trackFormSubmit({
+      form_name: 'contact_modal',
+      form_destination: 'enterprise_sales',
+      form_location: 'contact_modal',
+    })
+    trackLead('contact_modal')
     setFormState('success')
   }
 
@@ -146,6 +163,7 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
     onClose()
     setTimeout(() => {
       setFormState('idle')
+      formStartedRef.current = false
       setForm({ nome: '', email: '', telefone: '', cargo: '', empresa: '', uf: '' })
       setErrors({})
     }, 300)
@@ -155,14 +173,14 @@ export function ContactModal({ open, onClose, locale = 'pt', t = DEFAULT_T }: Co
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
 
-      <div className="relative w-full max-w-lg bg-canvas border border-hairline rounded-xl shadow-soft-lift overflow-hidden">
+      <div className="relative w-full sm:max-w-lg max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto bg-canvas border border-hairline rounded-t-2xl sm:rounded-xl shadow-soft-lift safe-bottom">
         <div className="flex items-start justify-between p-6 pb-4 border-b border-hairline">
           <div>
             <h2 id="modal-title" className="type-title-lg text-ink">

@@ -21,14 +21,11 @@ export function Footer({ locale, t }: FooterProps) {
             <p className="type-body-sm text-on-dark-soft max-w-[280px] mb-6">
               {t.tagline}
             </p>
-            <div className="flex items-center gap-3 flex-wrap">
-              <MonoLabel tone="on-dark">{t.available}</MonoLabel>
-              <LanguageSwitcher
-                currentLocale={locale}
-                label={t.switchLang}
-                className="type-mono-label text-on-dark-soft hover:text-on-dark transition-colors"
-              />
-            </div>
+            <LanguageSwitcher
+              currentLocale={locale}
+              label={t.switchLang}
+              className="type-mono-label text-on-dark-soft hover:text-on-dark transition-colors"
+            />
           </div>
 
           <div className="md:col-span-2">
