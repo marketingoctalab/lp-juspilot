@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { parseAttributionCookie } from "@/lib/attribution"
+import { sendLeadToColmeia } from "@/lib/colmeia"
 import { submitLeadSchema } from "@/lib/leads"
 import { createAdminClient } from "@/lib/supabase/admin"
 
@@ -59,6 +60,18 @@ export async function POST(request: NextRequest) {
         { status: 500 },
       )
     }
+
+    void sendLeadToColmeia({
+      nome: data.nome,
+      email: data.email.toLowerCase(),
+      telefone: data.telefone,
+      cargo: data.cargo,
+      empresa: data.empresa,
+      uf: data.uf,
+      lead_source: data.lead_source,
+      form_name: data.form_name,
+      utm: touch,
+    }).catch((e) => console.error("[api/leads] colmeia webhook falhou:", e))
 
     return NextResponse.json({ id: inserted.id }, { status: 201 })
   } catch (error) {
